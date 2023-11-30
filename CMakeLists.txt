@@ -1,6 +1,12 @@
 cmake_minimum_required(VERSION 3.27)
-project(PulsarionEngine)
+project(PulsarionProject)
 
-set(CMAKE_CXX_STANDARD 17)
+# PulsarionCore Dependencies
+add_subdirectory(PulsarionCore)
+add_subdirectory(PulsarionMath)
 
-add_library(PulsarionEngine SHARED library.cpp)
+add_subdirectory(PulsarionTests)
+add_subdirectory(PulsarionExamples)
+
+add_library(Pulsarion::Math ALIAS PulsarionMath)
+add_library(Pulsarion::Core ALIAS PulsarionCore)
