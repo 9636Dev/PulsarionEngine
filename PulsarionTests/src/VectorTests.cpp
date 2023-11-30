@@ -1,7 +1,6 @@
 #include <gtest/gtest.h>
 #include <PulsarionMath/Math.hpp>
 
-// Test Fixture for Vector Tests
 class Vector2DTest : public ::testing::Test {
 protected:
     void SetUp() override {
@@ -15,7 +14,7 @@ protected:
 
 // Test for division by zero
 TEST_F(Vector2DTest, HandlesDivisionByZero) {
-    Pulsarion::Math::Vector<float, 2> v(1.0f, 2.0f);
+    Pulsarion::float2 v(1.0f, 2.0f);
     auto result = v / 0.0f;
     EXPECT_TRUE(IsZeroVector(result));
 }
@@ -38,8 +37,8 @@ TEST_F(Vector2DTest, HandlesNormalization) {
 }
 
 TEST_F(Vector2DTest, HandlesAddition) {
-    Pulsarion::Math::Vector<float, 2> v1(1.0f, 2.0f);
-    Pulsarion::Math::Vector<float, 2> v2(3.0f, 4.0f);
+    Pulsarion::float2 v1(1.0f, 2.0f);
+    Pulsarion::float2 v2(3.0f, 4.0f);
     auto result = v1 + v2;
     EXPECT_FLOAT_EQ(result.x, 4.0f);
     EXPECT_FLOAT_EQ(result.y, 6.0f);
@@ -47,8 +46,8 @@ TEST_F(Vector2DTest, HandlesAddition) {
 
 
 TEST_F(Vector2DTest, HandlesSubtraction) {
-    Pulsarion::Math::Vector<float, 2> v1(5.0f, 4.0f);
-    Pulsarion::Math::Vector<float, 2> v2(1.0f, 2.0f);
+    Pulsarion::float2 v1(5.0f, 4.0f);
+    Pulsarion::float2 v2(1.0f, 2.0f);
     auto result = v1 - v2;
     EXPECT_FLOAT_EQ(result.x, 4.0f);
     EXPECT_FLOAT_EQ(result.y, 2.0f);
@@ -56,14 +55,21 @@ TEST_F(Vector2DTest, HandlesSubtraction) {
 
 
 TEST_F(Vector2DTest, HandlesDotProduct) {
-    Pulsarion::Math::Vector<float, 2> v1(1.0f, 2.0f);
-    Pulsarion::Math::Vector<float, 2> v2(3.0f, 4.0f);
+    Pulsarion::float2 v1(1.0f, 2.0f);
+    Pulsarion::float2 v2(3.0f, 4.0f);
     float result = v1.Dot(v2);
     EXPECT_FLOAT_EQ(result, 11.0f); // 1*3 + 2*4
 }
 
+TEST_F(Vector2DTest, HandlesCrossProduct) {
+    Pulsarion::float2 v1(1.0f, 2.0f);
+    Pulsarion::float2 v2(3.0f, 4.0f);
+    float result = v1.Cross(v2);
+    EXPECT_FLOAT_EQ(result, -2.0f); // 1*4 - 2*3
+}
+
 TEST_F(Vector2DTest, HandlesScalarMultiplication) {
-    Pulsarion::Math::Vector<float, 2> v(2.0f, 3.0f);
+    Pulsarion::float2 v(2.0f, 3.0f);
     float scalar = 2.0f;
     auto result = v * scalar;
     EXPECT_FLOAT_EQ(result.x, 4.0f);
@@ -71,6 +77,7 @@ TEST_F(Vector2DTest, HandlesScalarMultiplication) {
 }
 
 TEST_F(Vector2DTest, HandlesZeroVector) {
-    Pulsarion::Math::Vector<float, 2> v(0.0f, 0.0f);
+    Pulsarion::float2 v(0.0f, 0.0f);
     EXPECT_TRUE(IsZeroVector(v));
 }
+

@@ -4,7 +4,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(PROJECT_DESCRIPTION "This project contains the core headers and loggers used by Pulsarion")
 
 if(NOT DEFINED PULSARION_LIBRARY_TYPE)
-    set(PARENT_SCOPE PULSARION_LIBRARY_TYPE "STATIC" CACHE STRING "Type of library to build, static or shared")
+    set(PULSARION_LIBRARY_TYPE "STATIC" CACHE STRING "Type of library to build, static or shared")
 endif()
 MESSAGE(NOTICE "Building Pulsarion for type: ${PULSARION_LIBRARY_TYPE}")
 
