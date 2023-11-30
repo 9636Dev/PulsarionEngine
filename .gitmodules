@@ -1,6 +1,6 @@
-[submodule "PulsarionMath"]
-	path = PulsarionMath
-	url = https://github.com/HW9636/PulsarionMath
 [submodule "PulsarionCore/vendor/spdlog"]
 	path = PulsarionCore/vendor/spdlog
 	url = https://github.com/gabime/spdlog
+[submodule "PulsarionMath"]
+	path = PulsarionMath
+	url = https://github.com/HW9636/PulsarionMath
