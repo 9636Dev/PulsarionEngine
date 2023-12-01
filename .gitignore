@@ -12,3 +12,22 @@ install_manifest.txt
 compile_commands.json
 CTestTestfile.cmake
 _deps
+
+# Output targets
+/PulsarionTests/PulsarionTests
+/PulsarionTests/PulsarionTests.exe
+/PulsarionExamples/PulsarionExamples
+
+/bin/
+/lib/
+
+*.a
+*.so
+*.o
+*.dylib
+*.dll
+*.exe
+*.ilk
+*.pdb
+*.cmake
+*.cache

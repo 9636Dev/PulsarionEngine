@@ -1,8 +1,6 @@
 #include <gtest/gtest.h>
 #include <PulsarionMath/Math.hpp>
 
-#include <iostream>
-
 class Matrix4x4Test : public ::testing::Test
 {
 protected:
