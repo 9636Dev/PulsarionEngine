@@ -20,6 +20,7 @@ add_subdirectory(PulsarionMath)
 
 add_subdirectory(PulsarionTests)
 add_subdirectory(PulsarionExamples)
+add_subdirectory(PulsarionBenchmarks)
 
 add_library(Pulsarion::Math ALIAS PulsarionMath)
 add_library(Pulsarion::Core ALIAS PulsarionCore)

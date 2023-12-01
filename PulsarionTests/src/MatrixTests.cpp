@@ -485,3 +485,24 @@ TEST_F(Matrix4x4Test, HandlesMatrixMultiplication)
 	EXPECT_EQ(result7.data[14], 1372.0);
 	EXPECT_EQ(result7.data[15], 1314.0);
 }
+
+TEST_F(Matrix4x4Test, HandlesVectorMultiplication)
+{
+	const auto result1 = m1 * Vec4(1.0f, 2.0f, 3.0f, 4.0f);
+	EXPECT_FLOAT_EQ(result1.x, 30.0f);
+	EXPECT_FLOAT_EQ(result1.y, 70.0f);
+	EXPECT_FLOAT_EQ(result1.z, 110.0f);
+	EXPECT_FLOAT_EQ(result1.w, 150.0f);
+
+	const auto result2 = d1 * Vec4d(1.0, 2.0, 3.0, 4.0);
+	EXPECT_DOUBLE_EQ(result2.x, 30.0);
+	EXPECT_DOUBLE_EQ(result2.y, 70.0);
+	EXPECT_DOUBLE_EQ(result2.z, 110.0);
+	EXPECT_DOUBLE_EQ(result2.w, 150.0);
+
+	const auto result3 = ld1 * Vec4ld(1.0, 2.0, 3.0, 4.0);
+	EXPECT_EQ(result3.x, 30.0);
+	EXPECT_EQ(result3.y, 70.0);
+	EXPECT_EQ(result3.z, 110.0);
+	EXPECT_EQ(result3.w, 150.0);
+}
