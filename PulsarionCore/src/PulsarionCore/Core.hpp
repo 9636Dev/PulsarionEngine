@@ -39,3 +39,13 @@
 #else
 #error "Pulsarion only supports Debug and Release configurations"
 #endif
+
+// Testing macros
+
+#ifdef PULSARION_TESTING
+/// If PULSARION_TESTING is defined, then PULSARION_IF_TESTING(a, b) will evaluate to a
+#define PULSARION_IF_TESTING(a, b) a
+#else
+/// If PULSARION_TESTING is not defined, then PULSARION_IF_TESTING(a, b) will evaluate to b
+#define PULSARION_IF_TESTING(a, b) b
+#endif

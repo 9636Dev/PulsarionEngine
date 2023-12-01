@@ -6,6 +6,14 @@ if(NOT CMAKE_EXPORT_COMPILE_COMMANDS)
     set(PULSARION_MATH_HEADER_ONLY ON)
 endif()
 
+if (MSVC)
+    # Suppress warnings from fmtlib
+    add_compile_definitions(_SILENCE_ALL_MS_EXT_DEPRECATION_WARNINGS)
+
+    # Don't use header only, as that breaks IDE support for Visual Studio
+    unset(PULSARION_MATH_HEADER_ONLY)
+endif()
+
 # PulsarionCore Dependencies
 add_subdirectory(PulsarionCore)
 add_subdirectory(PulsarionMath)

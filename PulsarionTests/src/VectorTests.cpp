@@ -1,258 +1,992 @@
 #include <gtest/gtest.h>
 #include <PulsarionMath/Math.hpp>
 
+using namespace Pulsarion;
+
 class Vector2DTest : public ::testing::Test {
 protected:
-    void SetUp() override {
+	float2 v1, v2, zeroVector;
+	double2 dv1, dv2, dzeroVector;
+	ldouble2 ldv1, ldv2, ldzeroVector;
 
-    }
+	void SetUp() override {
+		v1 = float2(1.0f, 2.0f);
+		v2 = float2(3.0f, 4.0f);
+		zeroVector = float2(0.0f, 0.0f);
 
-    static bool IsZeroVector(const Pulsarion::float2& vec) {
-        return vec.x == 0.0f && vec.y == 0.0f;
-    }
+		dv1 = double2(1.0, 2.0);
+		dv2 = double2(3.0, 4.0);
+		dzeroVector = double2(0.0, 0.0);
+
+		ldv1 = ldouble2(1.0, 2.0);
+		ldv2 = ldouble2(3.0, 4.0);
+		ldzeroVector = ldouble2(0.0, 0.0);
+	}
+
+	static bool IsZeroVector(const float2& vec) {
+		return vec.x == 0.0f && vec.y == 0.0f;
+	}
+
+	static bool IsZeroVector(const double2& vec) {
+		return vec.x == 0.0 && vec.y == 0.0;
+	}
+
+	static bool IsZeroVector(const ldouble2& vec) {
+		return vec.x == 0.0 && vec.y == 0.0;
+	}
 };
 
 // Test for division by zero
 TEST_F(Vector2DTest, HandlesDivisionByZero) {
-    Pulsarion::float2 v(1.0f, 2.0f);
-    auto result = v / 0.0f;
-    EXPECT_TRUE(IsZeroVector(result));
+	auto result1 = v1 / 0.0f;
+	EXPECT_TRUE(IsZeroVector(result1));
+
+	auto result2 = dv1 / 0.0;
+	EXPECT_TRUE(IsZeroVector(result2));
+
+	auto result3 = ldv1 / 0.0;
+	EXPECT_TRUE(IsZeroVector(result3));
 }
 
 // Test for normalization
 TEST_F(Vector2DTest, HandlesNormalization) {
-    std::vector<Pulsarion::float2> testVectors = {
-        {1.0f, 0.0f}, {0.0f, 1.0f}, {3.0f, 4.0f}, {1e-6f, 0.0f}
-    };
+	auto normalizedVec1 = v1.Normalized();
+	if (!IsZeroVector(v1)) {
+		float magnitude = normalizedVec1.Magnitude();
+		EXPECT_NEAR(magnitude, 1.0f, 1e-6f);
+	}
+	else {
+		EXPECT_TRUE(IsZeroVector(normalizedVec1));
+	}
 
-    for (const auto& vec : testVectors) {
-        auto normalizedVec = vec.Normalized();
-        if (!IsZeroVector(vec)) {
-            float magnitude = normalizedVec.Magnitude();
-            EXPECT_NEAR(magnitude, 1.0f, 1e-6f);
-        } else {
-            EXPECT_TRUE(IsZeroVector(normalizedVec));
-        }
-    }
+	auto normalizedVec2 = dv1.Normalized();
+	if (!IsZeroVector(dv1)) {
+		double magnitude = normalizedVec2.Magnitude();
+		EXPECT_NEAR(magnitude, 1.0, 1e-6);
+	}
+	else {
+		EXPECT_TRUE(IsZeroVector(normalizedVec2));
+	}
+
+	auto normalizedVec3 = ldv1.Normalized();
+	if (!IsZeroVector(ldv1)) {
+		long double magnitude = normalizedVec3.Magnitude();
+		EXPECT_NEAR(magnitude, 1.0, 1e-6);
+	}
+	else {
+		EXPECT_TRUE(IsZeroVector(normalizedVec3));
+	}
 }
 
-TEST_F(Vector2DTest, HandlesAddition) {
-    Pulsarion::float2 v1(1.0f, 2.0f);
-    Pulsarion::float2 v2(3.0f, 4.0f);
-    auto result = v1 + v2;
-    EXPECT_FLOAT_EQ(result.x, 4.0f);
-    EXPECT_FLOAT_EQ(result.y, 6.0f);
+TEST_F(Vector2DTest, HandlesScalerAddition)
+{
+	auto result1 = v1 + 1.0f;
+	EXPECT_FLOAT_EQ(result1.x, 2.0f);
+	EXPECT_FLOAT_EQ(result1.y, 3.0f);
+
+	auto result2 = dv1 + 1.0;
+	EXPECT_DOUBLE_EQ(result2.x, 2.0);
+	EXPECT_DOUBLE_EQ(result2.y, 3.0);
+
+	auto result3 = ldv1 + 1.0;
+	EXPECT_EQ(result3.x, 2.0);
+	EXPECT_EQ(result3.y, 3.0);
 }
 
+TEST_F(Vector2DTest, HandlesScalerSubtraction)
+{
+	auto result1 = v1 - 1.0f;
+	EXPECT_FLOAT_EQ(result1.x, 0.0f);
+	EXPECT_FLOAT_EQ(result1.y, 1.0f);
 
-TEST_F(Vector2DTest, HandlesSubtraction) {
-    Pulsarion::float2 v1(5.0f, 4.0f);
-    Pulsarion::float2 v2(1.0f, 2.0f);
-    auto result = v1 - v2;
-    EXPECT_FLOAT_EQ(result.x, 4.0f);
-    EXPECT_FLOAT_EQ(result.y, 2.0f);
+	auto result2 = dv1 - 1.0;
+	EXPECT_DOUBLE_EQ(result2.x, 0.0);
+	EXPECT_DOUBLE_EQ(result2.y, 1.0);
+
+	auto result3 = ldv1 - 1.0;
+	EXPECT_EQ(result3.x, 0.0);
+	EXPECT_EQ(result3.y, 1.0);
 }
 
+TEST_F(Vector2DTest, HandlesScalerMultiplication)
+{
+	auto result1 = v1 * 2.0f;
+	EXPECT_FLOAT_EQ(result1.x, 2.0f);
+	EXPECT_FLOAT_EQ(result1.y, 4.0f);
 
-TEST_F(Vector2DTest, HandlesDotProduct) {
-    Pulsarion::float2 v1(1.0f, 2.0f);
-    Pulsarion::float2 v2(3.0f, 4.0f);
-    float result = v1.Dot(v2);
-    EXPECT_FLOAT_EQ(result, 11.0f); // 1*3 + 2*4
+	auto result2 = dv1 * 2.0;
+	EXPECT_DOUBLE_EQ(result2.x, 2.0);
+	EXPECT_DOUBLE_EQ(result2.y, 4.0);
+
+	auto result3 = ldv1 * 2.0;
+	EXPECT_EQ(result3.x, 2.0);
+	EXPECT_EQ(result3.y, 4.0);
 }
 
-TEST_F(Vector2DTest, HandlesCrossProduct) {
-    Pulsarion::float2 v1(1.0f, 2.0f);
-    Pulsarion::float2 v2(3.0f, 4.0f);
-    float result = v1.Cross(v2);
-    EXPECT_FLOAT_EQ(result, -2.0f); // 1*4 - 2*3
+TEST_F(Vector2DTest, HandlesScalerDivision)
+{
+	auto result1 = v1 / 2.0f;
+	EXPECT_FLOAT_EQ(result1.x, 0.5f);
+	EXPECT_FLOAT_EQ(result1.y, 1.0f);
+
+	auto result2 = dv1 / 2.0;
+	EXPECT_DOUBLE_EQ(result2.x, 0.5);
+	EXPECT_DOUBLE_EQ(result2.y, 1.0);
+
+	auto result3 = ldv1 / 2.0;
+	EXPECT_EQ(result3.x, 0.5);
+	EXPECT_EQ(result3.y, 1.0);
 }
 
-TEST_F(Vector2DTest, HandlesScalarMultiplication) {
-    Pulsarion::float2 v(2.0f, 3.0f);
-    float scalar = 2.0f;
-    auto result = v * scalar;
-    EXPECT_FLOAT_EQ(result.x, 4.0f);
-    EXPECT_FLOAT_EQ(result.y, 6.0f);
+TEST_F(Vector2DTest, HandlesVectorAddition)
+{
+	auto result1 = v1 + v2;
+	EXPECT_FLOAT_EQ(result1.x, 4.0f);
+	EXPECT_FLOAT_EQ(result1.y, 6.0f);
+
+	auto result2 = dv1 + dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 4.0);
+	EXPECT_DOUBLE_EQ(result2.y, 6.0);
+
+	auto result3 = ldv1 + ldv2;
+	EXPECT_EQ(result3.x, 4.0);
+	EXPECT_EQ(result3.y, 6.0);
 }
 
-TEST_F(Vector2DTest, HandlesZeroVector) {
-    Pulsarion::float2 v(0.0f, 0.0f);
-    EXPECT_TRUE(IsZeroVector(v));
+TEST_F(Vector2DTest, HandlesVectorSubtraction)
+{
+	auto result1 = v1 - v2;
+	EXPECT_FLOAT_EQ(result1.x, -2.0f);
+	EXPECT_FLOAT_EQ(result1.y, -2.0f);
+
+	auto result2 = dv1 - dv2;
+	EXPECT_DOUBLE_EQ(result2.x, -2.0);
+	EXPECT_DOUBLE_EQ(result2.y, -2.0);
+
+	auto result3 = ldv1 - ldv2;
+	EXPECT_EQ(result3.x, -2.0);
+	EXPECT_EQ(result3.y, -2.0);
+}
+
+TEST_F(Vector2DTest, HandlesVectorMultiplication)
+{
+	auto result1 = v1 * v2;
+	EXPECT_FLOAT_EQ(result1.x, 3.0f);
+	EXPECT_FLOAT_EQ(result1.y, 8.0f);
+
+	auto result2 = dv1 * dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 3.0);
+	EXPECT_DOUBLE_EQ(result2.y, 8.0);
+
+	auto result3 = ldv1 * ldv2;
+	EXPECT_EQ(result3.x, 3.0);
+	EXPECT_EQ(result3.y, 8.0);
+}
+
+TEST_F(Vector2DTest, HandlesVectorDivision)
+{
+	auto result1 = v1 / v2;
+	EXPECT_FLOAT_EQ(result1.x, 1.0f / 3.0f);
+	EXPECT_FLOAT_EQ(result1.y, 2.0f / 4.0f);
+
+	auto result2 = dv1 / dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 1.0 / 3.0);
+	EXPECT_DOUBLE_EQ(result2.y, 2.0 / 4.0);
+
+	auto result3 = ldv1 / ldv2;
+	EXPECT_EQ(result3.x, 1.0 / 3.0);
+	EXPECT_EQ(result3.y, 2.0 / 4.0);
+}
+
+TEST_F(Vector2DTest, HandlesVectorAdditionAssignment)
+{
+	auto result1 = v1;
+	result1 += v2;
+	EXPECT_FLOAT_EQ(result1.x, 4.0f);
+	EXPECT_FLOAT_EQ(result1.y, 6.0f);
+
+	auto result2 = dv1;
+	result2 += dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 4.0);
+	EXPECT_DOUBLE_EQ(result2.y, 6.0);
+
+	auto result3 = ldv1;
+	result3 += ldv2;
+	EXPECT_EQ(result3.x, 4.0);
+	EXPECT_EQ(result3.y, 6.0);
+}
+
+TEST_F(Vector2DTest, HandlesVectorSubtractionAssignment)
+{
+	auto result1 = v1;
+	result1 -= v2;
+	EXPECT_FLOAT_EQ(result1.x, -2.0f);
+	EXPECT_FLOAT_EQ(result1.y, -2.0f);
+
+	auto result2 = dv1;
+	result2 -= dv2;
+	EXPECT_DOUBLE_EQ(result2.x, -2.0);
+	EXPECT_DOUBLE_EQ(result2.y, -2.0);
+
+	auto result3 = ldv1;
+	result3 -= ldv2;
+	EXPECT_EQ(result3.x, -2.0);
+	EXPECT_EQ(result3.y, -2.0);
+}
+
+TEST_F(Vector2DTest, HandlesVectorMultiplicationAssignment)
+{
+	auto result1 = v1;
+	result1 *= v2;
+	EXPECT_FLOAT_EQ(result1.x, 3.0f);
+	EXPECT_FLOAT_EQ(result1.y, 8.0f);
+
+	auto result2 = dv1;
+	result2 *= dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 3.0);
+	EXPECT_DOUBLE_EQ(result2.y, 8.0);
+
+	auto result3 = ldv1;
+	result3 *= ldv2;
+	EXPECT_EQ(result3.x, 3.0);
+	EXPECT_EQ(result3.y, 8.0);
+}
+
+TEST_F(Vector2DTest, HandlesVectorDivisionAssignment)
+{
+	auto result1 = v1;
+	result1 /= v2;
+	EXPECT_FLOAT_EQ(result1.x, 1.0f / 3.0f);
+	EXPECT_FLOAT_EQ(result1.y, 2.0f / 4.0f);
+
+	auto result2 = dv1;
+	result2 /= dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 1.0 / 3.0);
+	EXPECT_DOUBLE_EQ(result2.y, 2.0 / 4.0);
+
+	auto result3 = ldv1;
+	result3 /= ldv2;
+	EXPECT_EQ(result3.x, 1.0 / 3.0);
+	EXPECT_EQ(result3.y, 2.0 / 4.0);
+}
+
+TEST_F(Vector2DTest, HandlesDotProduct)
+{
+	auto result1 = v1.Dot(v2);
+	EXPECT_EQ(result1, 11.0f); // 1 * 3 + 2 * 4
+
+	auto result2 = dv1.Dot(dv2);
+	EXPECT_EQ(result2, 11.0);
+
+	auto result3 = ldv1.Dot(ldv2);
+	EXPECT_EQ(result3, 11.0);
+}
+
+TEST_F(Vector2DTest, HandlesCrossProduct)
+{
+	auto result1 = v1.Cross(v2);
+	EXPECT_FLOAT_EQ(result1, -2.0f); // 1 * 4 - 2 * 3
+
+	auto result2 = dv1.Cross(dv2);
+	EXPECT_DOUBLE_EQ(result2, -2.0);
+
+	auto result3 = ldv1.Cross(ldv2);
+	EXPECT_EQ(result3, -2.0);
 }
 
 class Vector3DTest : public ::testing::Test {
 protected:
-    void SetUp() override {
+	float3 v1, v2, zeroVector;
+	double3 dv1, dv2, dzeroVector;
+	ldouble3 ldv1, ldv2, ldzeroVector;
 
-    }
+	void SetUp() override {
+		v1 = float3(1.0f, 2.0f, 3.0f);
+		v2 = float3(4.0f, 5.0f, 6.0f);
+		zeroVector = float3(0.0f, 0.0f, 0.0f);
 
-    static bool IsZeroVector(const Pulsarion::float3& vec) {
-        return vec.x == 0.0f && vec.y == 0.0f && vec.z == 0.0f;
-    }
+		dv1 = double3(1.0, 2.0, 3.0);
+		dv2 = double3(4.0, 5.0, 6.0);
+		dzeroVector = double3(0.0, 0.0, 0.0);
+
+		ldv1 = ldouble3(1.0, 2.0, 3.0);
+		ldv2 = ldouble3(4.0, 5.0, 6.0);
+		ldzeroVector = ldouble3(0.0, 0.0, 0.0);
+	}
+
+	static bool IsZeroVector(const float3& vec) {
+		return vec.x == 0.0f && vec.y == 0.0f && vec.z == 0.0f;
+	}
+
+	static bool IsZeroVector(const double3& vec) {
+		return vec.x == 0.0 && vec.y == 0.0 && vec.z == 0.0;
+	}
+
+	static bool IsZeroVector(const ldouble3& vec) {
+		return vec.x == 0.0 && vec.y == 0.0 && vec.z == 0.0;
+	}
 };
 
 // Test for division by zero
 TEST_F(Vector3DTest, HandlesDivisionByZero) {
-    Pulsarion::float3 v(1.0f, 2.0f, 3.0f);
-    auto result = v / 0.0f;
-    EXPECT_TRUE(IsZeroVector(result));
+	auto result1 = v1 / 0.0f;
+	EXPECT_TRUE(IsZeroVector(result1));
+
+	auto result2 = dv1 / 0.0;
+	EXPECT_TRUE(IsZeroVector(result2));
 }
 
 // Test for normalization
 TEST_F(Vector3DTest, HandlesNormalization) {
-    std::vector<Pulsarion::float3> testVectors = {
-        {1.0f, 2.0f, 0.0f}, {0.0f, 1.0f, 2.0f}, {3.0f, 4.0f, 5.0f}, {1e-6f, 0.0f, 0.0f}
-    };
+	auto normalizedVec1 = v1.Normalized();
+	if (!IsZeroVector(v1)) {
+		float magnitude = normalizedVec1.Magnitude();
+		EXPECT_NEAR(magnitude, 1.0f, 1e-6f);
+	}
+	else {
+		EXPECT_TRUE(IsZeroVector(normalizedVec1));
+	}
 
-    for (const auto& vec : testVectors) {
-        auto normalizedVec = vec.Normalized();
-        if (!IsZeroVector(vec)) {
-            float magnitude = normalizedVec.Magnitude();
-            EXPECT_NEAR(magnitude, 1.0f, 1e-6f);
-        } else {
-            EXPECT_TRUE(IsZeroVector(normalizedVec));
-        }
-    }
+	auto normalizedVec2 = dv1.Normalized();
+	if (!IsZeroVector(dv1)) {
+		double magnitude = normalizedVec2.Magnitude();
+		EXPECT_NEAR(magnitude, 1.0, 1e-6);
+	}
+	else {
+		EXPECT_TRUE(IsZeroVector(normalizedVec2));
+	}
+
+	auto normalizedVec3 = ldv1.Normalized();
+	if (!IsZeroVector(ldv1)) {
+		long double magnitude = normalizedVec3.Magnitude();
+		EXPECT_NEAR(magnitude, 1.0, 1e-6);
+	}
+	else {
+		EXPECT_TRUE(IsZeroVector(normalizedVec3));
+	}
 }
 
-TEST_F(Vector3DTest, HandlesAddition) {
-    Pulsarion::float3 v1(1.0f, 2.0f, 3.0f);
-    Pulsarion::float3 v2(4.0f, 5.0f, 6.0f);
-    auto result = v1 + v2;
-    EXPECT_FLOAT_EQ(result.x, 5.0f);
-    EXPECT_FLOAT_EQ(result.y, 7.0f);
-    EXPECT_FLOAT_EQ(result.z, 9.0f);
+TEST_F(Vector3DTest, HandlesScalerAddition)
+{
+	auto result1 = v1 + 1.0f;
+	EXPECT_FLOAT_EQ(result1.x, 2.0f);
+	EXPECT_FLOAT_EQ(result1.y, 3.0f);
+	EXPECT_FLOAT_EQ(result1.z, 4.0f);
+
+	auto result2 = dv1 + 1.0;
+	EXPECT_DOUBLE_EQ(result2.x, 2.0);
+	EXPECT_DOUBLE_EQ(result2.y, 3.0);
+	EXPECT_DOUBLE_EQ(result2.z, 4.0);
+
+	auto result3 = ldv1 + 1.0;
+	EXPECT_EQ(result3.x, 2.0);
+	EXPECT_EQ(result3.y, 3.0);
+	EXPECT_EQ(result3.z, 4.0);
 }
 
+TEST_F(Vector3DTest, HandlesScalerSubtraction)
+{
+	auto result = v1 - 1.0f;
+	EXPECT_FLOAT_EQ(result.x, 0.0f);
+	EXPECT_FLOAT_EQ(result.y, 1.0f);
+	EXPECT_FLOAT_EQ(result.z, 2.0f);
 
-TEST_F(Vector3DTest, HandlesSubtraction) {
-    Pulsarion::float3 v1(5.0f, 4.0f, 3.0f);
-    Pulsarion::float3 v2(2.0f, 1.0f, 0.0f);
-    auto result = v1 - v2;
-    EXPECT_FLOAT_EQ(result.x, 3.0f);
-    EXPECT_FLOAT_EQ(result.y, 3.0f);
-    EXPECT_FLOAT_EQ(result.z, 3.0f);
+	auto result2 = dv1 - 1.0;
+	EXPECT_DOUBLE_EQ(result2.x, 0.0);
+	EXPECT_DOUBLE_EQ(result2.y, 1.0);
+	EXPECT_DOUBLE_EQ(result2.z, 2.0);
+
+	auto result3 = ldv1 - 1.0;
+	EXPECT_EQ(result3.x, 0.0);
+	EXPECT_EQ(result3.y, 1.0);
+	EXPECT_EQ(result3.z, 2.0);
 }
 
+TEST_F(Vector3DTest, HandlesScalerMultiplication)
+{
+	auto result1 = v1 * 2.0f;
+	EXPECT_FLOAT_EQ(result1.x, 2.0f);
+	EXPECT_FLOAT_EQ(result1.y, 4.0f);
+	EXPECT_FLOAT_EQ(result1.z, 6.0f);
 
-TEST_F(Vector3DTest, HandlesDotProduct) {
-    Pulsarion::float3 v1(1.0f, 2.0f, 3.0f);
-    Pulsarion::float3 v2(4.0f, 5.0f, 6.0f);
-    float result = v1.Dot(v2);
-    EXPECT_FLOAT_EQ(result, 32.0f); // 1*4 + 2*5 + 3*6
+	auto result2 = dv1 * 2.0;
+	EXPECT_DOUBLE_EQ(result2.x, 2.0);
+	EXPECT_DOUBLE_EQ(result2.y, 4.0);
+	EXPECT_DOUBLE_EQ(result2.z, 6.0);
+
+	auto result3 = ldv1 * 2.0;
+	EXPECT_EQ(result3.x, 2.0);
+	EXPECT_EQ(result3.y, 4.0);
+	EXPECT_EQ(result3.z, 6.0);
 }
 
-TEST_F(Vector3DTest, HandlesCrossProduct) {
-    Pulsarion::float3 v1(1.0f, 2.0f, 3.0f);
-    Pulsarion::float3 v2(4.0f, 5.0f, 6.0f);
-    Pulsarion::float3 result = v1.Cross(v2);
-    EXPECT_FLOAT_EQ(result.x, -3.0f); // 2*6 - 3*5
-    EXPECT_FLOAT_EQ(result.y, 6.0f); // 3*4 - 1*6
-    EXPECT_FLOAT_EQ(result.z, -3.0f); // 1*5 - 2*4
+TEST_F(Vector3DTest, HandlesScalerDivision)
+{
+	auto result1 = v1 / 2.0f;
+	EXPECT_FLOAT_EQ(result1.x, 0.5f);
+	EXPECT_FLOAT_EQ(result1.y, 1.0f);
+	EXPECT_FLOAT_EQ(result1.z, 1.5f);
+
+	auto result2 = dv1 / 2.0;
+	EXPECT_DOUBLE_EQ(result2.x, 0.5);
+	EXPECT_DOUBLE_EQ(result2.y, 1.0);
+	EXPECT_DOUBLE_EQ(result2.z, 1.5);
+
+	auto result3 = ldv1 / 2.0;
+	EXPECT_EQ(result3.x, 0.5);
+	EXPECT_EQ(result3.y, 1.0);
+	EXPECT_EQ(result3.z, 1.5);
 }
 
-TEST_F(Vector3DTest, HandlesScalarMultiplication) {
-    Pulsarion::float3 v(2.0f, 3.0f, 4.0);
-    float scalar = 2.0f;
-    auto result = v * scalar;
-    EXPECT_FLOAT_EQ(result.x, 4.0f);
-    EXPECT_FLOAT_EQ(result.y, 6.0f);
-    EXPECT_FLOAT_EQ(result.z, 8.0f);
+TEST_F(Vector3DTest, HandlesVectorAddition)
+{
+	auto result1 = v1 + v2;
+	EXPECT_FLOAT_EQ(result1.x, 5.0f);
+	EXPECT_FLOAT_EQ(result1.y, 7.0f);
+	EXPECT_FLOAT_EQ(result1.z, 9.0f);
+
+	auto result2 = dv1 + dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 5.0);
+	EXPECT_DOUBLE_EQ(result2.y, 7.0);
+	EXPECT_DOUBLE_EQ(result2.z, 9.0);
+
+	auto result3 = ldv1 + ldv2;
+	EXPECT_EQ(result3.x, 5.0);
+	EXPECT_EQ(result3.y, 7.0);
+	EXPECT_EQ(result3.z, 9.0);
 }
 
-TEST_F(Vector3DTest, HandlesZeroVector) {
-    Pulsarion::float3 v(0.0f, 0.0f, 0.0f);
-    EXPECT_TRUE(IsZeroVector(v));
+TEST_F(Vector3DTest, HandlesVectorSubtraction)
+{
+	auto result1 = v1 - v2;
+	EXPECT_FLOAT_EQ(result1.x, -3.0f);
+	EXPECT_FLOAT_EQ(result1.y, -3.0f);
+	EXPECT_FLOAT_EQ(result1.z, -3.0f);
+
+	auto result2 = dv1 - dv2;
+	EXPECT_DOUBLE_EQ(result2.x, -3.0);
+	EXPECT_DOUBLE_EQ(result2.y, -3.0);
+	EXPECT_DOUBLE_EQ(result2.z, -3.0);
+
+	auto result3 = ldv1 - ldv2;
+	EXPECT_EQ(result3.x, -3.0);
+	EXPECT_EQ(result3.y, -3.0);
+	EXPECT_EQ(result3.z, -3.0);
 }
 
+TEST_F(Vector3DTest, HandlesVectorMultiplication)
+{
+	auto result1 = v1 * v2;
+	EXPECT_FLOAT_EQ(result1.x, 4.0f);
+	EXPECT_FLOAT_EQ(result1.y, 10.0f);
+	EXPECT_FLOAT_EQ(result1.z, 18.0f);
+
+	auto result2 = dv1 * dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 4.0);
+	EXPECT_DOUBLE_EQ(result2.y, 10.0);
+	EXPECT_DOUBLE_EQ(result2.z, 18.0);
+
+	auto result3 = ldv1 * ldv2;
+	EXPECT_EQ(result3.x, 4.0);
+	EXPECT_EQ(result3.y, 10.0);
+	EXPECT_EQ(result3.z, 18.0);
+}
+
+TEST_F(Vector3DTest, HandlesVectorDivision)
+{
+	auto result1 = v1 / v2;
+	EXPECT_FLOAT_EQ(result1.x, 1.0f / 4.0f);
+	EXPECT_FLOAT_EQ(result1.y, 2.0f / 5.0f);
+	EXPECT_FLOAT_EQ(result1.z, 3.0f / 6.0f);
+
+	auto result2 = dv1 / dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 1.0 / 4.0);
+	EXPECT_DOUBLE_EQ(result2.y, 2.0 / 5.0);
+	EXPECT_DOUBLE_EQ(result2.z, 3.0 / 6.0);
+
+	auto result3 = ldv1 / ldv2;
+	EXPECT_EQ(result3.x, 1.0 / 4.0);
+	EXPECT_EQ(result3.y, 2.0 / 5.0);
+	EXPECT_EQ(result3.z, 3.0 / 6.0);
+}
+
+TEST_F(Vector3DTest, HandlesVectorAdditionAssignment)
+{
+	auto result = v1;
+	result += v2;
+	EXPECT_FLOAT_EQ(result.x, 5.0f);
+	EXPECT_FLOAT_EQ(result.y, 7.0f);
+	EXPECT_FLOAT_EQ(result.z, 9.0f);
+
+	auto result2 = dv1;
+	result2 += dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 5.0);
+	EXPECT_DOUBLE_EQ(result2.y, 7.0);
+	EXPECT_DOUBLE_EQ(result2.z, 9.0);
+
+	auto result3 = ldv1;
+	result3 += ldv2;
+	EXPECT_EQ(result3.x, 5.0);
+	EXPECT_EQ(result3.y, 7.0);
+	EXPECT_EQ(result3.z, 9.0);
+}
+
+TEST_F(Vector3DTest, HandlesVectorSubtractionAssignment)
+{
+	auto result1 = v1;
+	result1 -= v2;
+	EXPECT_FLOAT_EQ(result1.x, -3.0f);
+	EXPECT_FLOAT_EQ(result1.y, -3.0f);
+	EXPECT_FLOAT_EQ(result1.z, -3.0f);
+
+	auto result2 = dv1;
+	result2 -= dv2;
+	EXPECT_DOUBLE_EQ(result2.x, -3.0);
+	EXPECT_DOUBLE_EQ(result2.y, -3.0);
+	EXPECT_DOUBLE_EQ(result2.z, -3.0);
+
+	auto result3 = ldv1;
+	result3 -= ldv2;
+	EXPECT_EQ(result3.x, -3.0);
+	EXPECT_EQ(result3.y, -3.0);
+	EXPECT_EQ(result3.z, -3.0);
+}
+
+TEST_F(Vector3DTest, HandlesVectorMultiplicationAssignment)
+{
+	auto result1 = v1;
+	result1 *= v2;
+	EXPECT_FLOAT_EQ(result1.x, 4.0f);
+	EXPECT_FLOAT_EQ(result1.y, 10.0f);
+	EXPECT_FLOAT_EQ(result1.z, 18.0f);
+
+	auto result2 = dv1;
+	result2 *= dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 4.0);
+	EXPECT_DOUBLE_EQ(result2.y, 10.0);
+	EXPECT_DOUBLE_EQ(result2.z, 18.0);
+
+	auto result3 = ldv1;
+	result3 *= ldv2;
+	EXPECT_EQ(result3.x, 4.0);
+	EXPECT_EQ(result3.y, 10.0);
+	EXPECT_EQ(result3.z, 18.0);
+}
+
+TEST_F(Vector3DTest, HandlesVectorDivisionAssignment)
+{
+	auto result1 = v1;
+	result1 /= v2;
+	EXPECT_FLOAT_EQ(result1.x, 1.0f / 4.0f);
+	EXPECT_FLOAT_EQ(result1.y, 2.0f / 5.0f);
+	EXPECT_FLOAT_EQ(result1.z, 3.0f / 6.0f);
+
+	auto result2 = dv1;
+	result2 /= dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 1.0 / 4.0);
+	EXPECT_DOUBLE_EQ(result2.y, 2.0 / 5.0);
+	EXPECT_DOUBLE_EQ(result2.z, 3.0 / 6.0);
+
+	auto result3 = ldv1;
+	result3 /= ldv2;
+	EXPECT_EQ(result3.x, 1.0 / 4.0);
+	EXPECT_EQ(result3.y, 2.0 / 5.0);
+	EXPECT_EQ(result3.z, 3.0 / 6.0);
+}
+
+TEST_F(Vector3DTest, HandlesDotProduct)
+{
+	auto result1 = v1.Dot(v2);
+	EXPECT_EQ(result1, 32.0f); // 1 * 4 + 2 * 5 + 3 * 6
+
+	auto result2 = dv1.Dot(dv2);
+	EXPECT_EQ(result2, 32.0);
+
+	auto result3 = ldv1.Dot(ldv2);
+	EXPECT_EQ(result3, 32.0);
+}
+
+TEST_F(Vector3DTest, HandlesCrossProduct)
+{
+	auto result = v1.Cross(v2);
+	EXPECT_FLOAT_EQ(result.x, -3.0f);
+	EXPECT_FLOAT_EQ(result.y, 6.0f);
+	EXPECT_FLOAT_EQ(result.z, -3.0f);
+
+	auto result2 = dv1.Cross(dv2);
+	EXPECT_DOUBLE_EQ(result2.x, -3.0);
+	EXPECT_DOUBLE_EQ(result2.y, 6.0);
+	EXPECT_DOUBLE_EQ(result2.z, -3.0);
+
+	auto result3 = ldv1.Cross(ldv2);
+	EXPECT_EQ(result3.x, -3.0);
+	EXPECT_EQ(result3.y, 6.0);
+	EXPECT_EQ(result3.z, -3.0);
+}
 
 class Vector4DTest : public ::testing::Test {
 protected:
-    void SetUp() override {
+	float4 v1, v2, zeroVector;
+	double4 dv1, dv2, dzeroVector;
+	ldouble4 ldv1, ldv2, ldzeroVector;
 
-    }
+	void SetUp() override {
+		v1 = float4(1.0f, 2.0f, 3.0f, 4.0f);
+		v2 = float4(5.0f, 6.0f, 7.0f, 8.0f);
+		zeroVector = float4(0.0f, 0.0f, 0.0f, 0.0f);
 
-    static bool IsZeroVector(const Pulsarion::float4& vec) {
-        return vec.x == 0.0f && vec.y == 0.0f && vec.z == 0.0f && vec.w == 0.0f;
-    }
+		dv1 = double4(1.0, 2.0, 3.0, 4.0);
+		dv2 = double4(5.0, 6.0, 7.0, 8.0);
+		dzeroVector = double4(0.0, 0.0, 0.0, 0.0);
+
+		ldv1 = ldouble4(1.0, 2.0, 3.0, 4.0);
+		ldv2 = ldouble4(5.0, 6.0, 7.0, 8.0);
+		ldzeroVector = ldouble4(0.0, 0.0, 0.0, 0.0);
+	}
+
+	static bool IsZeroVector(const float4& vec) {
+		return vec.x == 0.0f && vec.y == 0.0f && vec.z == 0.0f && vec.w == 0.0f;
+	}
+
+	static bool IsZeroVector(const double4& vec) {
+		return vec.x == 0.0 && vec.y == 0.0 && vec.z == 0.0 && vec.w == 0.0f;
+	}
+
+	static bool IsZeroVector(const ldouble4& vec) {
+		return vec.x == 0.0 && vec.y == 0.0 && vec.z == 0.0 && vec.w == 0.0f;
+	}
 };
 
 // Test for division by zero
 TEST_F(Vector4DTest, HandlesDivisionByZero) {
-    Pulsarion::float4 v(1.0f, 2.0f, 3.0f, 4.0f);
-    auto result = v / 0.0f;
-    EXPECT_TRUE(IsZeroVector(result));
+	auto result1 = v1 / 0.0f;
+	EXPECT_TRUE(IsZeroVector(result1));
+
+	auto result2 = dv1 / 0.0;
+	EXPECT_TRUE(IsZeroVector(result2));
 }
 
 // Test for normalization
 TEST_F(Vector4DTest, HandlesNormalization) {
-    std::vector<Pulsarion::float4> testVectors = {
-        {1.0f, 2.0f, 0.0f, 4.0f}, {0.0f, 1.0f, 2.0f, 3.0f}, {3.0f, 4.0f, 5.0f, 6.0f}, {1e-6f, 0.0f, 0.0f, 0.0f}
-    };
+	auto normalizedVec1 = v1.Normalized();
+	if (!IsZeroVector(v1)) {
+		float magnitude = normalizedVec1.Magnitude();
+		EXPECT_NEAR(magnitude, 1.0f, 1e-6f);
+	}
+	else {
+		EXPECT_TRUE(IsZeroVector(normalizedVec1));
+	}
 
-    for (const auto& vec : testVectors) {
-        auto normalizedVec = vec.Normalized();
-        if (!IsZeroVector(vec)) {
-            float magnitude = normalizedVec.Magnitude();
-            EXPECT_NEAR(magnitude, 1.0f, 1e-6f);
-        } else {
-            EXPECT_TRUE(IsZeroVector(normalizedVec));
-        }
-    }
+	auto normalizedVec2 = dv1.Normalized();
+	if (!IsZeroVector(dv1)) {
+		double magnitude = normalizedVec2.Magnitude();
+		EXPECT_NEAR(magnitude, 1.0, 1e-6);
+	}
+	else {
+		EXPECT_TRUE(IsZeroVector(normalizedVec2));
+	}
+
+	auto normalizedVec3 = ldv1.Normalized();
+	if (!IsZeroVector(ldv1)) {
+		long double magnitude = normalizedVec3.Magnitude();
+		EXPECT_NEAR(magnitude, 1.0, 1e-6);
+	}
+	else {
+		EXPECT_TRUE(IsZeroVector(normalizedVec3));
+	}
 }
 
-TEST_F(Vector4DTest, HandlesAddition) {
-    Pulsarion::float4 v1(1.0f, 2.0f, 3.0f, 4.0f);
-    Pulsarion::float4 v2(5.0f, 6.0f, 7.0f, 8.0f);
-    auto result = v1 + v2;
-    EXPECT_FLOAT_EQ(result.x, 6.0f);
-    EXPECT_FLOAT_EQ(result.y, 8.0f);
-    EXPECT_FLOAT_EQ(result.z, 10.0f);
-    EXPECT_FLOAT_EQ(result.w, 12.0f);
+TEST_F(Vector4DTest, HandlesScalerAddition)
+{
+	auto result1 = v1 + 1.0f;
+	EXPECT_FLOAT_EQ(result1.x, 2.0f);
+	EXPECT_FLOAT_EQ(result1.y, 3.0f);
+	EXPECT_FLOAT_EQ(result1.z, 4.0f);
+	EXPECT_FLOAT_EQ(result1.w, 5.0f);
+
+	auto result2 = dv1 + 1.0;
+	EXPECT_DOUBLE_EQ(result2.x, 2.0);
+	EXPECT_DOUBLE_EQ(result2.y, 3.0);
+	EXPECT_DOUBLE_EQ(result2.z, 4.0);
+	EXPECT_DOUBLE_EQ(result2.w, 5.0);
+
+	auto result3 = ldv1 + 1.0;
+	EXPECT_EQ(result3.x, 2.0);
+	EXPECT_EQ(result3.y, 3.0);
+	EXPECT_EQ(result3.z, 4.0);
+	EXPECT_EQ(result3.w, 5.0);
 }
 
+TEST_F(Vector4DTest, HandlesScalerSubtraction)
+{
+	auto result = v1 - 1.0f;
+	EXPECT_FLOAT_EQ(result.x, 0.0f);
+	EXPECT_FLOAT_EQ(result.y, 1.0f);
+	EXPECT_FLOAT_EQ(result.z, 2.0f);
+	EXPECT_FLOAT_EQ(result.w, 3.0f);
 
-TEST_F(Vector4DTest, HandlesSubtraction) {
-    Pulsarion::float4 v1(8.0f, 7.0f, 6.0f, 5.0f);
-    Pulsarion::float4 v2(4.0f, 3.0f, 2.0f, 1.0f);
-    auto result = v1 - v2;
-    EXPECT_FLOAT_EQ(result.x, 4.0f);
-    EXPECT_FLOAT_EQ(result.y, 4.0f);
-    EXPECT_FLOAT_EQ(result.z, 4.0f);
-    EXPECT_FLOAT_EQ(result.w, 4.0f);
+	auto result2 = dv1 - 1.0;
+	EXPECT_DOUBLE_EQ(result2.x, 0.0);
+	EXPECT_DOUBLE_EQ(result2.y, 1.0);
+	EXPECT_DOUBLE_EQ(result2.z, 2.0);
+	EXPECT_DOUBLE_EQ(result2.w, 3.0);
+
+	auto result3 = ldv1 - 1.0;
+	EXPECT_EQ(result3.x, 0.0);
+	EXPECT_EQ(result3.y, 1.0);
+	EXPECT_EQ(result3.z, 2.0);
+	EXPECT_EQ(result3.w, 3.0);
 }
 
+TEST_F(Vector4DTest, HandlesScalerMultiplication)
+{
+	auto result1 = v1 * 2.0f;
+	EXPECT_FLOAT_EQ(result1.x, 2.0f);
+	EXPECT_FLOAT_EQ(result1.y, 4.0f);
+	EXPECT_FLOAT_EQ(result1.z, 6.0f);
+	EXPECT_FLOAT_EQ(result1.w, 8.0f);
 
-TEST_F(Vector4DTest, HandlesDotProduct) {
-    Pulsarion::float4 v1(1.0f, 2.0f, 3.0f, 4.0f);
-    Pulsarion::float4 v2(5.0f, 6.0f, 7.0f, 8.0f);
-    float result = v1.Dot(v2);
-    EXPECT_FLOAT_EQ(result, 70.0f); // 1*5 + 2*6 + 3*7 + 4*8
+	auto result2 = dv1 * 2.0;
+	EXPECT_DOUBLE_EQ(result2.x, 2.0);
+	EXPECT_DOUBLE_EQ(result2.y, 4.0);
+	EXPECT_DOUBLE_EQ(result2.z, 6.0);
+	EXPECT_DOUBLE_EQ(result2.w, 8.0);
+
+	auto result3 = ldv1 * 2.0;
+	EXPECT_EQ(result3.x, 2.0);
+	EXPECT_EQ(result3.y, 4.0);
+	EXPECT_EQ(result3.z, 6.0);
+	EXPECT_EQ(result3.w, 8.0);
 }
 
-TEST_F(Vector4DTest, HandlesCrossProduct) {
-    Pulsarion::float4 v1(1.0f, 2.0f, 3.0f);
-    Pulsarion::float4 v2(4.0f, 5.0f, 6.0f);
-    Pulsarion::float4 result = v1.Cross3D(v2); // Cross product is only defined for 3D vectors
-    EXPECT_FLOAT_EQ(result.x, -3.0f); // 2*6 - 3*5
-    EXPECT_FLOAT_EQ(result.y, 6.0f); // 3*4 - 1*6
-    EXPECT_FLOAT_EQ(result.z, -3.0f); // 1*5 - 2*4
-    EXPECT_FLOAT_EQ(result.w, 0.0f);
+TEST_F(Vector4DTest, HandlesScalerDivision)
+{
+	auto result1 = v1 / 2.0f;
+	EXPECT_FLOAT_EQ(result1.x, 0.5f);
+	EXPECT_FLOAT_EQ(result1.y, 1.0f);
+	EXPECT_FLOAT_EQ(result1.z, 1.5f);
+	EXPECT_FLOAT_EQ(result1.w, 2.0f);
+
+	auto result2 = dv1 / 2.0;
+	EXPECT_DOUBLE_EQ(result2.x, 0.5);
+	EXPECT_DOUBLE_EQ(result2.y, 1.0);
+	EXPECT_DOUBLE_EQ(result2.z, 1.5);
+	EXPECT_DOUBLE_EQ(result2.w, 2.0);
+
+	auto result3 = ldv1 / 2.0;
+	EXPECT_EQ(result3.x, 0.5);
+	EXPECT_EQ(result3.y, 1.0);
+	EXPECT_EQ(result3.z, 1.5);
+	EXPECT_EQ(result3.w, 2.0);
 }
 
-TEST_F(Vector4DTest, HandlesScalarMultiplication) {
-    Pulsarion::float4 v(2.0f, 3.0f, 4.0, 5.0f);
-    float scalar = 2.0f;
-    auto result = v * scalar;
-    EXPECT_FLOAT_EQ(result.x, 4.0f);
-    EXPECT_FLOAT_EQ(result.y, 6.0f);
-    EXPECT_FLOAT_EQ(result.z, 8.0f);
-    EXPECT_FLOAT_EQ(result.w, 10.0f);
+TEST_F(Vector4DTest, HandlesVectorAddition)
+{
+	auto result1 = v1 + v2;
+	EXPECT_FLOAT_EQ(result1.x, 6.0f);
+	EXPECT_FLOAT_EQ(result1.y, 8.0f);
+	EXPECT_FLOAT_EQ(result1.z, 10.0f);
+	EXPECT_FLOAT_EQ(result1.w, 12.0f);
+
+	auto result2 = dv1 + dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 6.0);
+	EXPECT_DOUBLE_EQ(result2.y, 8.0);
+	EXPECT_DOUBLE_EQ(result2.z, 10.0);
+	EXPECT_DOUBLE_EQ(result2.w, 12.0);
+
+	auto result3 = ldv1 + ldv2;
+	EXPECT_EQ(result3.x, 6.0);
+	EXPECT_EQ(result3.y, 8.0);
+	EXPECT_EQ(result3.z, 10.0);
+	EXPECT_EQ(result3.w, 12.0);
+
 }
 
-TEST_F(Vector4DTest, HandlesZeroVector) {
-    Pulsarion::float4 v(0.0f, 0.0f, 0.0f, 0.0f);
-    EXPECT_TRUE(IsZeroVector(v));
+TEST_F(Vector4DTest, HandlesVectorSubtraction)
+{
+	auto result1 = v1 - v2;
+	EXPECT_FLOAT_EQ(result1.x, -4.0f);
+	EXPECT_FLOAT_EQ(result1.y, -4.0f);
+	EXPECT_FLOAT_EQ(result1.z, -4.0f);
+	EXPECT_FLOAT_EQ(result1.w, -4.0f);
+
+	auto result2 = dv1 - dv2;
+	EXPECT_DOUBLE_EQ(result2.x, -4.0);
+	EXPECT_DOUBLE_EQ(result2.y, -4.0);
+	EXPECT_DOUBLE_EQ(result2.z, -4.0);
+	EXPECT_DOUBLE_EQ(result2.w, -4.0);
+
+	auto result3 = ldv1 - ldv2;
+	EXPECT_EQ(result3.x, -4.0);
+	EXPECT_EQ(result3.y, -4.0);
+	EXPECT_EQ(result3.z, -4.0);
+	EXPECT_EQ(result3.w, -4.0);
 }
 
+TEST_F(Vector4DTest, HandlesVectorMultiplication)
+{
+	auto result1 = v1 * v2;
+	EXPECT_FLOAT_EQ(result1.x, 5.0f);
+	EXPECT_FLOAT_EQ(result1.y, 12.0f);
+	EXPECT_FLOAT_EQ(result1.z, 21.0f);
+	EXPECT_FLOAT_EQ(result1.w, 32.0f);
+
+	auto result2 = dv1 * dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 5.0);
+	EXPECT_DOUBLE_EQ(result2.y, 12.0);
+	EXPECT_DOUBLE_EQ(result2.z, 21.0);
+	EXPECT_DOUBLE_EQ(result2.w, 32.0);
+
+	auto result3 = ldv1 * ldv2;
+	EXPECT_EQ(result3.x, 5.0);
+	EXPECT_EQ(result3.y, 12.0);
+	EXPECT_EQ(result3.z, 21.0);
+	EXPECT_EQ(result3.w, 32.0);
+}
+
+TEST_F(Vector4DTest, HandlesVectorDivision)
+{
+	auto result1 = v1 / v2;
+	EXPECT_FLOAT_EQ(result1.x, 1.0f / 5.0f);
+	EXPECT_FLOAT_EQ(result1.y, 2.0f / 6.0f);
+	EXPECT_FLOAT_EQ(result1.z, 3.0f / 7.0f);
+	EXPECT_FLOAT_EQ(result1.w, 4.0f / 8.0f);
+
+	auto result2 = dv1 / dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 1.0 / 5.0);
+	EXPECT_DOUBLE_EQ(result2.y, 2.0 / 6.0);
+	EXPECT_DOUBLE_EQ(result2.z, 3.0 / 7.0);
+	EXPECT_DOUBLE_EQ(result2.w, 4.0 / 8.0);
+
+	auto result3 = ldv1 / ldv2;
+	EXPECT_EQ(result3.x, 1.0 / 5.0);
+	EXPECT_EQ(result3.y, 2.0 / 6.0);
+	EXPECT_EQ(result3.z, 3.0 / 7.0);
+	EXPECT_EQ(result3.w, 4.0 / 8.0);
+}
+
+TEST_F(Vector4DTest, HandlesVectorAdditionAssignment)
+{
+	auto result = v1;
+	result += v2;
+	EXPECT_FLOAT_EQ(result.x, 6.0f);
+	EXPECT_FLOAT_EQ(result.y, 8.0f);
+	EXPECT_FLOAT_EQ(result.z, 10.0f);
+	EXPECT_FLOAT_EQ(result.w, 12.0f);
+
+	auto result2 = dv1;
+	result2 += dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 6.0);
+	EXPECT_DOUBLE_EQ(result2.y, 8.0);
+	EXPECT_DOUBLE_EQ(result2.z, 10.0);
+	EXPECT_DOUBLE_EQ(result2.w, 12.0);
+
+	auto result3 = ldv1;
+	result3 += ldv2;
+	EXPECT_EQ(result3.x, 6.0);
+	EXPECT_EQ(result3.y, 8.0);
+	EXPECT_EQ(result3.z, 10.0);
+	EXPECT_EQ(result3.w, 12.0);
+}
+
+TEST_F(Vector4DTest, HandlesVectorSubtractionAssignment)
+{
+	auto result1 = v1;
+	result1 -= v2;
+	EXPECT_FLOAT_EQ(result1.x, -4.0f);
+	EXPECT_FLOAT_EQ(result1.y, -4.0f);
+	EXPECT_FLOAT_EQ(result1.z, -4.0f);
+	EXPECT_FLOAT_EQ(result1.w, -4.0f);
+
+	auto result2 = dv1;
+	result2 -= dv2;
+	EXPECT_DOUBLE_EQ(result2.x, -4.0);
+	EXPECT_DOUBLE_EQ(result2.y, -4.0);
+	EXPECT_DOUBLE_EQ(result2.z, -4.0);
+	EXPECT_DOUBLE_EQ(result2.w, -4.0);
+
+	auto result3 = ldv1;
+	result3 -= ldv2;
+	EXPECT_EQ(result3.x, -4.0);
+	EXPECT_EQ(result3.y, -4.0);
+	EXPECT_EQ(result3.z, -4.0);
+	EXPECT_EQ(result3.w, -4.0);
+}
+
+TEST_F(Vector4DTest, HandlesVectorMultiplicationAssignment)
+{
+	auto result1 = v1;
+	result1 *= v2;
+	EXPECT_FLOAT_EQ(result1.x, 5.0f);
+	EXPECT_FLOAT_EQ(result1.y, 12.0f);
+	EXPECT_FLOAT_EQ(result1.z, 21.0f);
+	EXPECT_FLOAT_EQ(result1.w, 32.0f);
+
+	auto result2 = dv1;
+	result2 *= dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 5.0);
+	EXPECT_DOUBLE_EQ(result2.y, 12.0);
+	EXPECT_DOUBLE_EQ(result2.z, 21.0);
+	EXPECT_DOUBLE_EQ(result2.w, 32.0);
+
+	auto result3 = ldv1;
+	result3 *= ldv2;
+	EXPECT_EQ(result3.x, 5.0);
+	EXPECT_EQ(result3.y, 12.0);
+	EXPECT_EQ(result3.z, 21.0);
+	EXPECT_EQ(result3.w, 32.0);
+}
+
+TEST_F(Vector4DTest, HandlesVectorDivisionAssignment)
+{
+	auto result1 = v1;
+	result1 /= v2;
+	EXPECT_FLOAT_EQ(result1.x, 1.0f / 5.0f);
+	EXPECT_FLOAT_EQ(result1.y, 2.0f / 6.0f);
+	EXPECT_FLOAT_EQ(result1.z, 3.0f / 7.0f);
+	EXPECT_FLOAT_EQ(result1.w, 4.0f / 8.0f);
+
+	auto result2 = dv1;
+	result2 /= dv2;
+	EXPECT_DOUBLE_EQ(result2.x, 1.0 / 5.0);
+	EXPECT_DOUBLE_EQ(result2.y, 2.0 / 6.0);
+	EXPECT_DOUBLE_EQ(result2.z, 3.0 / 7.0);
+	EXPECT_DOUBLE_EQ(result2.w, 4.0 / 8.0);
+
+	auto result3 = ldv1;
+	result3 /= ldv2;
+	EXPECT_EQ(result3.x, 1.0 / 5.0);
+	EXPECT_EQ(result3.y, 2.0 / 6.0);
+	EXPECT_EQ(result3.z, 3.0 / 7.0);
+	EXPECT_EQ(result3.w, 4.0 / 8.0);
+}
+
+TEST_F(Vector4DTest, HandlesDotProduct)
+{
+	auto result1 = v1.Dot(v2);
+	EXPECT_EQ(result1, 70.0f); // 1 * 5 + 2 * 6 + 3 * 7 + 4 * 8
+
+	auto result2 = dv1.Dot(dv2);
+	EXPECT_EQ(result2, 70.0);
+
+	auto result3 = ldv1.Dot(ldv2);
+	EXPECT_EQ(result3, 70.0);
+}
+
+TEST_F(Vector4DTest, HandlesCrossProduct)
+{
+	auto result = v1.Cross3D(v2); // Only defined for 3D vectors
+	EXPECT_FLOAT_EQ(result.x, -4.0f);
+	EXPECT_FLOAT_EQ(result.y, 8.0f);
+	EXPECT_FLOAT_EQ(result.z, -4.0f);
+
+	auto result2 = dv1.Cross3D(dv2);
+	EXPECT_DOUBLE_EQ(result2.x, -4.0);
+	EXPECT_DOUBLE_EQ(result2.y, 8.0);
+	EXPECT_DOUBLE_EQ(result2.z, -4.0);
+
+	auto result3 = ldv1.Cross3D(ldv2);
+	EXPECT_EQ(result3.x, -4.0);
+	EXPECT_EQ(result3.y, 8.0);
+	EXPECT_EQ(result3.z, -4.0);
+}

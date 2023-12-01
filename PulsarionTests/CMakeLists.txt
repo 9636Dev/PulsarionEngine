@@ -1,6 +1,7 @@
 cmake_minimum_required(VERSION 3.27)
 project(PulsarionTests)
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 include(FetchContent)
 FetchContent_Declare(
@@ -16,6 +17,7 @@ include(GoogleTest)
 set(PULSARION_TEST_SOURCES
         src/VectorTests.cpp
         src/MatrixTests.cpp
+        src/QuaternionTests.cpp
 )
 add_executable(PulsarionTests ${PULSARION_TEST_SOURCES})
 

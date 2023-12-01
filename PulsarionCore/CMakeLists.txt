@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 3.27)
 project(PulsarionCore)
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
+
 set(PROJECT_DESCRIPTION "This project contains the core headers and loggers used by Pulsarion")
 
 if(NOT DEFINED PULSARION_LIBRARY_TYPE)
