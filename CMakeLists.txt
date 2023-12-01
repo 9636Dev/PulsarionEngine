@@ -1,6 +1,11 @@
 cmake_minimum_required(VERSION 3.27)
 project(PulsarionProject)
 
+# If CMAKE_EXPORT_COMPILE_COMMANDS is enabled, make sure to not define header only for dependencies
+if(NOT CMAKE_EXPORT_COMPILE_COMMANDS)
+    set(PULSARION_MATH_HEADER_ONLY ON)
+endif()
+
 # PulsarionCore Dependencies
 add_subdirectory(PulsarionCore)
 add_subdirectory(PulsarionMath)

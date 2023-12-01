@@ -18,6 +18,11 @@ _deps
 /PulsarionTests/PulsarionTests.exe
 /PulsarionExamples/PulsarionExamples
 
+# Everything in /build/ that is not .editorconfig or .sh
+/build/*
+!/build/.editorconfig
+!/build/*.sh
+
 /bin/
 /lib/
 
