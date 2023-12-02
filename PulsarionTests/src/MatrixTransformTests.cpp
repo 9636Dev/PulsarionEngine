@@ -210,10 +210,80 @@ TEST_F(MatrixTransformTest, HandlesRotation)
 
 TEST_F(MatrixTransformTest, HandlesAxisRotation)
 {
+	const auto result = Math::MatrixRotate(rotation, rotationAxis, matrix);
 
+	// Rotation of 'rotation' radians around the X axis
+	EXPECT_FLOAT_EQ(result.data[0], 1.0f);
+	EXPECT_FLOAT_EQ(result.data[1], 0.0f);
+	EXPECT_FLOAT_EQ(result.data[2], 0.0f);
+	EXPECT_FLOAT_EQ(result.data[3], 0.0f);
+	EXPECT_FLOAT_EQ(result.data[4], 0.0f);
+	EXPECT_FLOAT_EQ(result.data[5], Math::Cos(rotation));
+	EXPECT_FLOAT_EQ(result.data[6], Math::Sin(rotation));
+	EXPECT_FLOAT_EQ(result.data[7], 0.0f);
+	EXPECT_FLOAT_EQ(result.data[8], 0.0f);
+	EXPECT_FLOAT_EQ(result.data[9], -Math::Sin(rotation));
+	EXPECT_FLOAT_EQ(result.data[10], Math::Cos(rotation));
+	EXPECT_FLOAT_EQ(result.data[11], 0.0f);
+	EXPECT_FLOAT_EQ(result.data[12], 0.0f);
+	EXPECT_FLOAT_EQ(result.data[13], 0.0f);
+	EXPECT_FLOAT_EQ(result.data[14], 0.0f);
+	EXPECT_FLOAT_EQ(result.data[15], 1.0f);
+
+	const auto result2 = result * float4(0.0f, 0.0f, 0.0, 1.0f);
+	// Should equal 0, since we're rotating the origin
+	EXPECT_FLOAT_EQ(result2.x, 0.0f);
+	EXPECT_FLOAT_EQ(result2.y, 0.0f);
+	EXPECT_FLOAT_EQ(result2.z, 0.0f);
+	EXPECT_FLOAT_EQ(result2.w, 1.0f);
+
+	const auto result3 = result * float4(1.0f, 1.0f, 1.0, 1.0f);
+	EXPECT_FLOAT_EQ(result3.x, 1.0f);
+	EXPECT_FLOAT_EQ(result3.y, Math::Cos(rotation) - Math::Sin(rotation));
+	EXPECT_FLOAT_EQ(result3.z, Math::Sin(rotation) + Math::Cos(rotation));
+	EXPECT_FLOAT_EQ(result3.w, 1.0f);
 }
 
 TEST_F(MatrixTransformTest, HandlesCompositeTransform)
 {
+	// Transform by translation, then rotation, then scale
 
+	const auto translationMatrix = Math::MatrixTranslate(translation, matrix);
+	const auto rotationMatrix = Math::MatrixRotate(rotation, rotationAxis, matrix);
+	const auto scaleMatrix = Math::MatrixScale(scale, matrix);
+
+	const auto result = translationMatrix * rotationMatrix * scaleMatrix;
+	auto result2 = Math::MatrixTranslate(translation, matrix);
+	result2 = Math::MatrixRotate(rotation, rotationAxis, result2);
+	result2 = Math::MatrixScale(scale, result2);
+
+	EXPECT_FLOAT_EQ(result.data[0], result2.data[0]);
+	EXPECT_FLOAT_EQ(result.data[1], result2.data[1]);
+	EXPECT_FLOAT_EQ(result.data[2], result2.data[2]);
+	EXPECT_FLOAT_EQ(result.data[3], result2.data[3]);
+	EXPECT_FLOAT_EQ(result.data[4], result2.data[4]);
+	EXPECT_FLOAT_EQ(result.data[5], result2.data[5]);
+	EXPECT_FLOAT_EQ(result.data[6], result2.data[6]);
+	EXPECT_FLOAT_EQ(result.data[7], result2.data[7]);
+	EXPECT_FLOAT_EQ(result.data[8], result2.data[8]);
+	EXPECT_FLOAT_EQ(result.data[9], result2.data[9]);
+	EXPECT_FLOAT_EQ(result.data[10], result2.data[10]);
+	EXPECT_FLOAT_EQ(result.data[11], result2.data[11]);
+	EXPECT_FLOAT_EQ(result.data[12], result2.data[12]);
+	EXPECT_FLOAT_EQ(result.data[13], result2.data[13]);
+	EXPECT_FLOAT_EQ(result.data[14], result2.data[14]);
+	EXPECT_FLOAT_EQ(result.data[15], result2.data[15]);
+
+	const auto result3 = result * float4(0.0f, 0.0f, 0.0, 1.0f);
+	// Should equal translation, since we're transforming the origin
+	EXPECT_FLOAT_EQ(result3.x, translation.x);
+	EXPECT_FLOAT_EQ(result3.y, translation.y);
+	EXPECT_FLOAT_EQ(result3.z, translation.z);
+	EXPECT_FLOAT_EQ(result3.w, 1.0f);
+
+	const auto result4 = result * float4(1.0f, 1.0f, 1.0, 1.0f);
+	EXPECT_FLOAT_EQ(result4.x, scale.x + translation.x);
+	EXPECT_FLOAT_EQ(result4.y, scale.y * (Math::Cos(rotation) - Math::Sin(rotation)) + translation.y);
+	EXPECT_FLOAT_EQ(result4.z, scale.z * (Math::Sin(rotation) + Math::Cos(rotation)) + translation.z);
+	EXPECT_FLOAT_EQ(result4.w, 1.0f);
 }
