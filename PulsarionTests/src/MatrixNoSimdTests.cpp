@@ -1,9 +1,10 @@
 #include <gtest/gtest.h>
+#define PULSARION_MATH_DISABLE_SIMD
 #include <PulsarionMath/Math.hpp>
 
 using namespace Pulsarion;
 
-class Matrix4x4Test : public ::testing::Test
+class Matrix4x4NoSimdTest : public ::testing::Test
 {
 protected:
 	Mat4 m1;
@@ -73,7 +74,7 @@ protected:
 	}
 };
 
-TEST_F(Matrix4x4Test, HandlesIdentity)
+TEST_F(Matrix4x4NoSimdTest, HandlesIdentity)
 {
 	EXPECT_FLOAT_EQ(mIdentity.data[0], 1.0f);
 	EXPECT_FLOAT_EQ(mIdentity.data[1], 0.0f);
@@ -128,7 +129,7 @@ TEST_F(Matrix4x4Test, HandlesIdentity)
 	EXPECT_FLOAT_EQ(ldIdentity.data[15], 1.0);
 }
 
-TEST_F(Matrix4x4Test, HandlesTranspose)
+TEST_F(Matrix4x4NoSimdTest, HandlesTranspose)
 {
 	m1.Transpose();
 	EXPECT_FLOAT_EQ(m1.data[0], 1.0f);
@@ -185,7 +186,7 @@ TEST_F(Matrix4x4Test, HandlesTranspose)
 	EXPECT_EQ(ld1.data[15], 16.0);
 }
 
-TEST_F(Matrix4x4Test, HandlesAddition)
+TEST_F(Matrix4x4NoSimdTest, HandlesAddition)
 {
 	const auto result = m1 + m2;
 	EXPECT_FLOAT_EQ(result.data[0], 33.0f);
@@ -242,7 +243,7 @@ TEST_F(Matrix4x4Test, HandlesAddition)
 	EXPECT_EQ(result3.data[15], 33.0);
 }
 
-TEST_F(Matrix4x4Test, HandlesSubtraction)
+TEST_F(Matrix4x4NoSimdTest, HandlesSubtraction)
 {
 	const auto result = m1 - m2;
 	EXPECT_FLOAT_EQ(result.data[0], -31.0f); // This is wrong, because our matrix is column major
@@ -299,7 +300,7 @@ TEST_F(Matrix4x4Test, HandlesSubtraction)
 	EXPECT_EQ(result3.data[15], -1.0);
 }
 
-TEST_F(Matrix4x4Test, HandlesScalerMultiplication)
+TEST_F(Matrix4x4NoSimdTest, HandlesScalerMultiplication)
 {
 	const auto result = m1 * 2.0f;
 	EXPECT_FLOAT_EQ(result.data[0], 2.0f);
@@ -356,7 +357,7 @@ TEST_F(Matrix4x4Test, HandlesScalerMultiplication)
 	EXPECT_EQ(result3.data[15], 32.0);
 }
 
-TEST_F(Matrix4x4Test, HandlesMatrixMultiplication)
+TEST_F(Matrix4x4NoSimdTest, HandlesMatrixMultiplication)
 {
 	const auto result1 = mIdentity * m1;
 	EXPECT_FLOAT_EQ(result1.data[0], 1.0f);
@@ -485,13 +486,13 @@ TEST_F(Matrix4x4Test, HandlesMatrixMultiplication)
 	EXPECT_EQ(result7.data[15], 1314.0);
 }
 
-TEST_F(Matrix4x4Test, HandlesVectorMultiplication)
+TEST_F(Matrix4x4NoSimdTest, HandlesVectorMultiplication)
 {
 	const auto result1 = m1 * Vec4(1.0f, 2.0f, 3.0f, 4.0f);
-	EXPECT_FLOAT_EQ(result1.x, 90.0f); // 1 * 5 + 2 * 6 + 3 * 7 + 4 * 8 = 90
-	EXPECT_FLOAT_EQ(result1.y, 100.0f); // 1 * 9 + 2 * 10 + 3 * 11 + 4 * 12 = 100
-	EXPECT_FLOAT_EQ(result1.z, 110.0f); // 1 * 13 + 2 * 14 + 3 * 15 + 4 * 16 = 110
-	EXPECT_FLOAT_EQ(result1.w, 120.0f); // 1 * 17 + 2 * 18 + 3 * 19 + 4 * 20 = 120
+	EXPECT_FLOAT_EQ(result1.x, 90.0f);
+	EXPECT_FLOAT_EQ(result1.y, 100.0f);
+	EXPECT_FLOAT_EQ(result1.z, 110.0f);
+	EXPECT_FLOAT_EQ(result1.w, 120.0f);
 
 	const auto result2 = d1 * Vec4d(1.0, 2.0, 3.0, 4.0);
 	EXPECT_DOUBLE_EQ(result2.x, 90.0);

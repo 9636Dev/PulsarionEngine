@@ -16,7 +16,10 @@ include(GoogleTest)
 
 set(PULSARION_TEST_SOURCES
         src/VectorTests.cpp
+        src/VectorNoSimdTests.cpp
         src/MatrixTests.cpp
+        src/MatrixNoSimdTests.cpp
+        src/MatrixTransformTests.cpp
         src/QuaternionTests.cpp
 )
 add_executable(PulsarionTests ${PULSARION_TEST_SOURCES})
