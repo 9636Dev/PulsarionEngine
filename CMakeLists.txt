@@ -17,6 +17,7 @@ endif()
 # PulsarionCore Dependencies
 add_subdirectory(PulsarionCore)
 add_subdirectory(PulsarionMath)
+add_subdirectory(PulsarionWindowing)
 
 add_subdirectory(PulsarionTests)
 add_subdirectory(PulsarionExamples)
@@ -24,3 +25,4 @@ add_subdirectory(PulsarionBenchmarks)
 
 add_library(Pulsarion::Math ALIAS PulsarionMath)
 add_library(Pulsarion::Core ALIAS PulsarionCore)
+add_library(Pulsarion::Windowing ALIAS PulsarionWindowing)

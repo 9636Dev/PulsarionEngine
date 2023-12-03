@@ -4,3 +4,6 @@
 [submodule "PulsarionMath"]
 	path = PulsarionMath
 	url = https://github.com/HW9636/PulsarionMath
+[submodule "PulsarionWindowing/vendor/glfw"]
+	path = PulsarionWindowing/vendor/glfw
+	url = https://github.com/glfw/glfw

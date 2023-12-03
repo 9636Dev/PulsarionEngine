@@ -49,3 +49,6 @@
 /// If PULSARION_TESTING is not defined, then PULSARION_IF_TESTING(a, b) will evaluate to b
 #define PULSARION_IF_TESTING(a, b) b
 #endif
+
+// Include cstdint for fixed-width integer types
+#include <cstdint>

@@ -12,3 +12,4 @@ target_include_directories(PulsarionExamples PUBLIC src)
 
 target_link_libraries(PulsarionExamples PUBLIC Pulsarion::Core)
 target_link_libraries(PulsarionExamples PUBLIC Pulsarion::Math)
+target_link_libraries(PulsarionExamples PUBLIC Pulsarion::Windowing)

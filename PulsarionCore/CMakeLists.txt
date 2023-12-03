@@ -10,16 +10,22 @@ if(NOT DEFINED PULSARION_LIBRARY_TYPE)
 endif()
 MESSAGE(NOTICE "Building Pulsarion for type: ${PULSARION_LIBRARY_TYPE}")
 
+if (NOT DEFINED PULSARION_RENDERER)
+    set(PULSARION_RENDERER "OpenGL" CACHE STRING "Type of renderer to use, OpenGL, Metal, DirectX12 or Vulkan")
+endif()
+MESSAGE(NOTICE "Building Pulsarion for renderer: ${PULSARION_RENDERER}")
+
 add_subdirectory(vendor/spdlog) # SpdLog
 
 set(PULSARION_BUILD_LIBRARY_DEFINE STRING "PULSARION_BUILD_DLL")
 
 set(PULSARION_CORE_SOURCES
-    src/PulsarionCore/Log.hpp
-    src/PulsarionCore/Log.cpp
+        src/PulsarionCore/Log.hpp
+        src/PulsarionCore/Log.cpp
         src/PulsarionCore/Core.hpp
         src/PulsarionCore/Core.hpp
         src/PulsarionCore/Assert.hpp
+        src/PulsarionCore/Utility.hpp # Contains utility classes
 )
 add_library(PulsarionCore STATIC ${PULSARION_CORE_SOURCES})
 
@@ -36,7 +42,19 @@ target_compile_definitions(PulsarionCore PUBLIC
         $<$<CONFIG:Debug>:PULSARION_DEBUG>
         $<$<CONFIG:Release>:PULSARION_RELEASE>
         $<$<CONFIG:Debug>:SPDLOG_ACTIVE_LEVEL=0>
+        $<$<CONFIG:Release>:SPDLOG_ACTIVE_LEVEL=1>
 )
+
+if (PULSARION_RENDERER STREQUAL "OpenGL")
+    target_compile_definitions(PulsarionCore PUBLIC PULSARION_RENDERER_OPENGL)
+elseif (PULSARION_RENDERER STREQUAL "Metal")
+    target_compile_definitions(PulsarionCore PUBLIC PULSARION_RENDERER_METAL)
+elseif (PULSARION_RENDERER STREQUAL "DirectX12")
+    target_compile_definitions(PulsarionCore PUBLIC PULSARION_RENDERER_DIRECTX12)
+elseif (PULSARION_RENDERER STREQUAL "Vulkan")
+    target_compile_definitions(PulsarionCore PUBLIC PULSARION_RENDERER_VULKAN)
+endif()
+
 
 target_link_libraries(PulsarionCore PUBLIC spdlog::spdlog)
 

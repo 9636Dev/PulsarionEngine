@@ -13,7 +13,8 @@ FetchContent_Declare(
   GIT_TAG        v1.5.2  # Optionally specify a version tag or commit
 )
 # Set benchmark_ENABLE_TESTING to OFF to avoid Google Benchmark's own tests being run
-set(benchmark_ENABLE_TESTING OFF CACHE BOOL "Suppressing benchmark's tests" FORCE)
+set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "Suppressing benchmark's tests" FORCE)
+
 FetchContent_MakeAvailable(googlebenchmark)
 
 set(PULSARION_BENCHMARK_SOURCE
