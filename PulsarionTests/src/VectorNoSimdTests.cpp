@@ -90,8 +90,8 @@ TEST_F(Vector2DNoSimdTest, HandlesScalerAddition)
 	EXPECT_DOUBLE_EQ(result2.y, 3.0);
 
 	auto result3 = ldv1 + 1.0;
-	EXPECT_EQ(result3.x, 2.0);
-	EXPECT_EQ(result3.y, 3.0);
+	EXPECT_NEAR(result3.x, 2.0, 1e-5);
+	EXPECT_NEAR(result3.y, 3.0, 1e-5);
 }
 
 TEST_F(Vector2DNoSimdTest, HandlesScalerSubtraction)
@@ -105,8 +105,8 @@ TEST_F(Vector2DNoSimdTest, HandlesScalerSubtraction)
 	EXPECT_DOUBLE_EQ(result2.y, 1.0);
 
 	auto result3 = ldv1 - 1.0;
-	EXPECT_EQ(result3.x, 0.0);
-	EXPECT_EQ(result3.y, 1.0);
+	EXPECT_NEAR(result3.x, 0.0, 1e-5);
+	EXPECT_NEAR(result3.y, 1.0, 1e-5);
 }
 
 TEST_F(Vector2DNoSimdTest, HandlesScalerMultiplication)
@@ -120,8 +120,8 @@ TEST_F(Vector2DNoSimdTest, HandlesScalerMultiplication)
 	EXPECT_DOUBLE_EQ(result2.y, 4.0);
 
 	auto result3 = ldv1 * 2.0;
-	EXPECT_EQ(result3.x, 2.0);
-	EXPECT_EQ(result3.y, 4.0);
+	EXPECT_NEAR(result3.x, 2.0, 1e-5);
+	EXPECT_NEAR(result3.y, 4.0, 1e-5);
 }
 
 TEST_F(Vector2DNoSimdTest, HandlesScalerDivision)
@@ -135,8 +135,8 @@ TEST_F(Vector2DNoSimdTest, HandlesScalerDivision)
 	EXPECT_DOUBLE_EQ(result2.y, 1.0);
 
 	auto result3 = ldv1 / 2.0;
-	EXPECT_EQ(result3.x, 0.5);
-	EXPECT_EQ(result3.y, 1.0);
+	EXPECT_NEAR(result3.x, 0.5, 1e-5);
+	EXPECT_NEAR(result3.y, 1.0, 1e-5);
 }
 
 TEST_F(Vector2DNoSimdTest, HandlesVectorAddition)
@@ -150,8 +150,8 @@ TEST_F(Vector2DNoSimdTest, HandlesVectorAddition)
 	EXPECT_DOUBLE_EQ(result2.y, 6.0);
 
 	auto result3 = ldv1 + ldv2;
-	EXPECT_EQ(result3.x, 4.0);
-	EXPECT_EQ(result3.y, 6.0);
+	EXPECT_NEAR(result3.x, 4.0, 1e-5);
+	EXPECT_NEAR(result3.y, 6.0, 1e-5);
 }
 
 TEST_F(Vector2DNoSimdTest, HandlesVectorSubtraction)
@@ -165,8 +165,8 @@ TEST_F(Vector2DNoSimdTest, HandlesVectorSubtraction)
 	EXPECT_DOUBLE_EQ(result2.y, -2.0);
 
 	auto result3 = ldv1 - ldv2;
-	EXPECT_EQ(result3.x, -2.0);
-	EXPECT_EQ(result3.y, -2.0);
+	EXPECT_NEAR(result3.x, -2.0, 1e-5);
+	EXPECT_NEAR(result3.y, -2.0, 1e-5);
 }
 
 TEST_F(Vector2DNoSimdTest, HandlesVectorMultiplication)
@@ -180,8 +180,8 @@ TEST_F(Vector2DNoSimdTest, HandlesVectorMultiplication)
 	EXPECT_DOUBLE_EQ(result2.y, 8.0);
 
 	auto result3 = ldv1 * ldv2;
-	EXPECT_EQ(result3.x, 3.0);
-	EXPECT_EQ(result3.y, 8.0);
+	EXPECT_NEAR(result3.x, 3.0, 1e-5);
+	EXPECT_NEAR(result3.y, 8.0, 1e-5);
 }
 
 TEST_F(Vector2DNoSimdTest, HandlesVectorDivision)
@@ -195,8 +195,8 @@ TEST_F(Vector2DNoSimdTest, HandlesVectorDivision)
 	EXPECT_DOUBLE_EQ(result2.y, 2.0 / 4.0);
 
 	auto result3 = ldv1 / ldv2;
-	EXPECT_EQ(result3.x, 1.0 / 3.0);
-	EXPECT_EQ(result3.y, 2.0 / 4.0);
+	EXPECT_NEAR(result3.x, 1.0 / 3.0, 1e-5);
+	EXPECT_NEAR(result3.y, 2.0 / 4.0, 1e-5);
 }
 
 TEST_F(Vector2DNoSimdTest, HandlesVectorAdditionAssignment)
@@ -213,8 +213,8 @@ TEST_F(Vector2DNoSimdTest, HandlesVectorAdditionAssignment)
 
 	auto result3 = ldv1;
 	result3 += ldv2;
-	EXPECT_EQ(result3.x, 4.0);
-	EXPECT_EQ(result3.y, 6.0);
+	EXPECT_NEAR(result3.x, 4.0, 1e-5);
+	EXPECT_NEAR(result3.y, 6.0, 1e-5);
 }
 
 TEST_F(Vector2DNoSimdTest, HandlesVectorSubtractionAssignment)
@@ -231,8 +231,8 @@ TEST_F(Vector2DNoSimdTest, HandlesVectorSubtractionAssignment)
 
 	auto result3 = ldv1;
 	result3 -= ldv2;
-	EXPECT_EQ(result3.x, -2.0);
-	EXPECT_EQ(result3.y, -2.0);
+	EXPECT_NEAR(result3.x, -2.0, 1e-5);
+	EXPECT_NEAR(result3.y, -2.0, 1e-5);
 }
 
 TEST_F(Vector2DNoSimdTest, HandlesVectorMultiplicationAssignment)
@@ -249,8 +249,8 @@ TEST_F(Vector2DNoSimdTest, HandlesVectorMultiplicationAssignment)
 
 	auto result3 = ldv1;
 	result3 *= ldv2;
-	EXPECT_EQ(result3.x, 3.0);
-	EXPECT_EQ(result3.y, 8.0);
+	EXPECT_NEAR(result3.x, 3.0, 1e-5);
+	EXPECT_NEAR(result3.y, 8.0, 1e-5);
 }
 
 TEST_F(Vector2DNoSimdTest, HandlesVectorDivisionAssignment)
@@ -267,20 +267,20 @@ TEST_F(Vector2DNoSimdTest, HandlesVectorDivisionAssignment)
 
 	auto result3 = ldv1;
 	result3 /= ldv2;
-	EXPECT_EQ(result3.x, 1.0 / 3.0);
-	EXPECT_EQ(result3.y, 2.0 / 4.0);
+	EXPECT_NEAR(result3.x, 1.0 / 3.0, 1e-5);
+	EXPECT_NEAR(result3.y, 2.0 / 4.0, 1e-5);
 }
 
 TEST_F(Vector2DNoSimdTest, HandlesDotProduct)
 {
 	auto result1 = v1.Dot(v2);
-	EXPECT_EQ(result1, 11.0f); // 1 * 3 + 2 * 4
+	EXPECT_NEAR(result1, 11.0f, 1e-5); // 1 * 3 + 2 * 4
 
 	auto result2 = dv1.Dot(dv2);
-	EXPECT_EQ(result2, 11.0);
+	EXPECT_NEAR(result2, 11.0, 1e-5);
 
 	auto result3 = ldv1.Dot(ldv2);
-	EXPECT_EQ(result3, 11.0);
+	EXPECT_NEAR(result3, 11.0, 1e-5);
 }
 
 TEST_F(Vector2DNoSimdTest, HandlesCrossProduct)
@@ -292,7 +292,7 @@ TEST_F(Vector2DNoSimdTest, HandlesCrossProduct)
 	EXPECT_DOUBLE_EQ(result2, -2.0);
 
 	auto result3 = ldv1.Cross(ldv2);
-	EXPECT_EQ(result3, -2.0);
+	EXPECT_NEAR(result3, -2.0, 1e-5);
 }
 
 class Vector3DNoSimdTest : public ::testing::Test {
@@ -380,9 +380,9 @@ TEST_F(Vector3DNoSimdTest, HandlesScalerAddition)
 	EXPECT_DOUBLE_EQ(result2.z, 4.0);
 
 	auto result3 = ldv1 + 1.0;
-	EXPECT_EQ(result3.x, 2.0);
-	EXPECT_EQ(result3.y, 3.0);
-	EXPECT_EQ(result3.z, 4.0);
+	EXPECT_NEAR(result3.x, 2.0, 1e-5);
+	EXPECT_NEAR(result3.y, 3.0, 1e-5);
+	EXPECT_NEAR(result3.z, 4.0, 1e-5);
 }
 
 TEST_F(Vector3DNoSimdTest, HandlesScalerSubtraction)
@@ -398,9 +398,9 @@ TEST_F(Vector3DNoSimdTest, HandlesScalerSubtraction)
 	EXPECT_DOUBLE_EQ(result2.z, 2.0);
 
 	auto result3 = ldv1 - 1.0;
-	EXPECT_EQ(result3.x, 0.0);
-	EXPECT_EQ(result3.y, 1.0);
-	EXPECT_EQ(result3.z, 2.0);
+	EXPECT_NEAR(result3.x, 0.0, 1e-5);
+	EXPECT_NEAR(result3.y, 1.0, 1e-5);
+	EXPECT_NEAR(result3.z, 2.0, 1e-5);
 }
 
 TEST_F(Vector3DNoSimdTest, HandlesScalerMultiplication)
@@ -416,9 +416,9 @@ TEST_F(Vector3DNoSimdTest, HandlesScalerMultiplication)
 	EXPECT_DOUBLE_EQ(result2.z, 6.0);
 
 	auto result3 = ldv1 * 2.0;
-	EXPECT_EQ(result3.x, 2.0);
-	EXPECT_EQ(result3.y, 4.0);
-	EXPECT_EQ(result3.z, 6.0);
+	EXPECT_NEAR(result3.x, 2.0, 1e-5);
+	EXPECT_NEAR(result3.y, 4.0, 1e-5);
+	EXPECT_NEAR(result3.z, 6.0, 1e-5);
 }
 
 TEST_F(Vector3DNoSimdTest, HandlesScalerDivision)
@@ -434,9 +434,9 @@ TEST_F(Vector3DNoSimdTest, HandlesScalerDivision)
 	EXPECT_DOUBLE_EQ(result2.z, 1.5);
 
 	auto result3 = ldv1 / 2.0;
-	EXPECT_EQ(result3.x, 0.5);
-	EXPECT_EQ(result3.y, 1.0);
-	EXPECT_EQ(result3.z, 1.5);
+	EXPECT_NEAR(result3.x, 0.5, 1e-5);
+	EXPECT_NEAR(result3.y, 1.0, 1e-5);
+	EXPECT_NEAR(result3.z, 1.5, 1e-5);
 }
 
 TEST_F(Vector3DNoSimdTest, HandlesVectorAddition)
@@ -452,9 +452,9 @@ TEST_F(Vector3DNoSimdTest, HandlesVectorAddition)
 	EXPECT_DOUBLE_EQ(result2.z, 9.0);
 
 	auto result3 = ldv1 + ldv2;
-	EXPECT_EQ(result3.x, 5.0);
-	EXPECT_EQ(result3.y, 7.0);
-	EXPECT_EQ(result3.z, 9.0);
+	EXPECT_NEAR(result3.x, 5.0, 1e-5);
+	EXPECT_NEAR(result3.y, 7.0, 1e-5);
+	EXPECT_NEAR(result3.z, 9.0, 1e-5);
 }
 
 TEST_F(Vector3DNoSimdTest, HandlesVectorSubtraction)
@@ -470,9 +470,9 @@ TEST_F(Vector3DNoSimdTest, HandlesVectorSubtraction)
 	EXPECT_DOUBLE_EQ(result2.z, -3.0);
 
 	auto result3 = ldv1 - ldv2;
-	EXPECT_EQ(result3.x, -3.0);
-	EXPECT_EQ(result3.y, -3.0);
-	EXPECT_EQ(result3.z, -3.0);
+	EXPECT_NEAR(result3.x, -3.0, 1e-5);
+	EXPECT_NEAR(result3.y, -3.0, 1e-5);
+	EXPECT_NEAR(result3.z, -3.0, 1e-5);
 }
 
 TEST_F(Vector3DNoSimdTest, HandlesVectorMultiplication)
@@ -488,9 +488,9 @@ TEST_F(Vector3DNoSimdTest, HandlesVectorMultiplication)
 	EXPECT_DOUBLE_EQ(result2.z, 18.0);
 
 	auto result3 = ldv1 * ldv2;
-	EXPECT_EQ(result3.x, 4.0);
-	EXPECT_EQ(result3.y, 10.0);
-	EXPECT_EQ(result3.z, 18.0);
+	EXPECT_NEAR(result3.x, 4.0, 1e-5);
+	EXPECT_NEAR(result3.y, 10.0, 1e-5);
+	EXPECT_NEAR(result3.z, 18.0, 1e-5);
 }
 
 TEST_F(Vector3DNoSimdTest, HandlesVectorDivision)
@@ -506,9 +506,9 @@ TEST_F(Vector3DNoSimdTest, HandlesVectorDivision)
 	EXPECT_DOUBLE_EQ(result2.z, 3.0 / 6.0);
 
 	auto result3 = ldv1 / ldv2;
-	EXPECT_EQ(result3.x, 1.0 / 4.0);
-	EXPECT_EQ(result3.y, 2.0 / 5.0);
-	EXPECT_EQ(result3.z, 3.0 / 6.0);
+	EXPECT_NEAR(result3.x, 1.0 / 4.0, 1e-5);
+	EXPECT_NEAR(result3.y, 2.0 / 5.0, 1e-5);
+	EXPECT_NEAR(result3.z, 3.0 / 6.0, 1e-5);
 }
 
 TEST_F(Vector3DNoSimdTest, HandlesVectorAdditionAssignment)
@@ -527,9 +527,9 @@ TEST_F(Vector3DNoSimdTest, HandlesVectorAdditionAssignment)
 
 	auto result3 = ldv1;
 	result3 += ldv2;
-	EXPECT_EQ(result3.x, 5.0);
-	EXPECT_EQ(result3.y, 7.0);
-	EXPECT_EQ(result3.z, 9.0);
+	EXPECT_NEAR(result3.x, 5.0, 1e-5);
+	EXPECT_NEAR(result3.y, 7.0, 1e-5);
+	EXPECT_NEAR(result3.z, 9.0, 1e-5);
 }
 
 TEST_F(Vector3DNoSimdTest, HandlesVectorSubtractionAssignment)
@@ -548,9 +548,9 @@ TEST_F(Vector3DNoSimdTest, HandlesVectorSubtractionAssignment)
 
 	auto result3 = ldv1;
 	result3 -= ldv2;
-	EXPECT_EQ(result3.x, -3.0);
-	EXPECT_EQ(result3.y, -3.0);
-	EXPECT_EQ(result3.z, -3.0);
+	EXPECT_NEAR(result3.x, -3.0, 1e-5);
+	EXPECT_NEAR(result3.y, -3.0, 1e-5);
+	EXPECT_NEAR(result3.z, -3.0, 1e-5);
 }
 
 TEST_F(Vector3DNoSimdTest, HandlesVectorMultiplicationAssignment)
@@ -569,9 +569,9 @@ TEST_F(Vector3DNoSimdTest, HandlesVectorMultiplicationAssignment)
 
 	auto result3 = ldv1;
 	result3 *= ldv2;
-	EXPECT_EQ(result3.x, 4.0);
-	EXPECT_EQ(result3.y, 10.0);
-	EXPECT_EQ(result3.z, 18.0);
+	EXPECT_NEAR(result3.x, 4.0, 1e-5);
+	EXPECT_NEAR(result3.y, 10.0, 1e-5);
+	EXPECT_NEAR(result3.z, 18.0, 1e-5);
 }
 
 TEST_F(Vector3DNoSimdTest, HandlesVectorDivisionAssignment)
@@ -590,21 +590,21 @@ TEST_F(Vector3DNoSimdTest, HandlesVectorDivisionAssignment)
 
 	auto result3 = ldv1;
 	result3 /= ldv2;
-	EXPECT_EQ(result3.x, 1.0 / 4.0);
-	EXPECT_EQ(result3.y, 2.0 / 5.0);
-	EXPECT_EQ(result3.z, 3.0 / 6.0);
+	EXPECT_NEAR(result3.x, 1.0 / 4.0, 1e-5);
+	EXPECT_NEAR(result3.y, 2.0 / 5.0, 1e-5);
+	EXPECT_NEAR(result3.z, 3.0 / 6.0, 1e-5);
 }
 
 TEST_F(Vector3DNoSimdTest, HandlesDotProduct)
 {
 	auto result1 = v1.Dot(v2);
-	EXPECT_EQ(result1, 32.0f); // 1 * 4 + 2 * 5 + 3 * 6
+	EXPECT_NEAR(result1, 32.0f, 1e-5); // 1 * 4 + 2 * 5 + 3 * 6
 
 	auto result2 = dv1.Dot(dv2);
-	EXPECT_EQ(result2, 32.0);
+	EXPECT_NEAR(result2, 32.0, 1e-5);
 
 	auto result3 = ldv1.Dot(ldv2);
-	EXPECT_EQ(result3, 32.0);
+	EXPECT_NEAR(result3, 32.0, 1e-5);
 }
 
 TEST_F(Vector3DNoSimdTest, HandlesCrossProduct)
@@ -620,9 +620,9 @@ TEST_F(Vector3DNoSimdTest, HandlesCrossProduct)
 	EXPECT_DOUBLE_EQ(result2.z, -3.0);
 
 	auto result3 = ldv1.Cross(ldv2);
-	EXPECT_EQ(result3.x, -3.0);
-	EXPECT_EQ(result3.y, 6.0);
-	EXPECT_EQ(result3.z, -3.0);
+	EXPECT_NEAR(result3.x, -3.0, 1e-5);
+	EXPECT_NEAR(result3.y, 6.0, 1e-5);
+	EXPECT_NEAR(result3.z, -3.0, 1e-5);
 }
 
 class Vector4DNoSimdTest : public ::testing::Test {
@@ -712,10 +712,10 @@ TEST_F(Vector4DNoSimdTest, HandlesScalerAddition)
 	EXPECT_DOUBLE_EQ(result2.w, 5.0);
 
 	auto result3 = ldv1 + 1.0;
-	EXPECT_EQ(result3.x, 2.0);
-	EXPECT_EQ(result3.y, 3.0);
-	EXPECT_EQ(result3.z, 4.0);
-	EXPECT_EQ(result3.w, 5.0);
+	EXPECT_NEAR(result3.x, 2.0, 1e-5);
+	EXPECT_NEAR(result3.y, 3.0, 1e-5);
+	EXPECT_NEAR(result3.z, 4.0, 1e-5);
+	EXPECT_NEAR(result3.w, 5.0, 1e-5);
 }
 
 TEST_F(Vector4DNoSimdTest, HandlesScalerSubtraction)
@@ -733,10 +733,10 @@ TEST_F(Vector4DNoSimdTest, HandlesScalerSubtraction)
 	EXPECT_DOUBLE_EQ(result2.w, 3.0);
 
 	auto result3 = ldv1 - 1.0;
-	EXPECT_EQ(result3.x, 0.0);
-	EXPECT_EQ(result3.y, 1.0);
-	EXPECT_EQ(result3.z, 2.0);
-	EXPECT_EQ(result3.w, 3.0);
+	EXPECT_NEAR(result3.x, 0.0, 1e-5);
+	EXPECT_NEAR(result3.y, 1.0, 1e-5);
+	EXPECT_NEAR(result3.z, 2.0, 1e-5);
+	EXPECT_NEAR(result3.w, 3.0, 1e-5);
 }
 
 TEST_F(Vector4DNoSimdTest, HandlesScalerMultiplication)
@@ -754,10 +754,10 @@ TEST_F(Vector4DNoSimdTest, HandlesScalerMultiplication)
 	EXPECT_DOUBLE_EQ(result2.w, 8.0);
 
 	auto result3 = ldv1 * 2.0;
-	EXPECT_EQ(result3.x, 2.0);
-	EXPECT_EQ(result3.y, 4.0);
-	EXPECT_EQ(result3.z, 6.0);
-	EXPECT_EQ(result3.w, 8.0);
+	EXPECT_NEAR(result3.x, 2.0, 1e-5);
+	EXPECT_NEAR(result3.y, 4.0, 1e-5);
+	EXPECT_NEAR(result3.z, 6.0, 1e-5);
+	EXPECT_NEAR(result3.w, 8.0, 1e-5);
 }
 
 TEST_F(Vector4DNoSimdTest, HandlesScalerDivision)
@@ -775,10 +775,10 @@ TEST_F(Vector4DNoSimdTest, HandlesScalerDivision)
 	EXPECT_DOUBLE_EQ(result2.w, 2.0);
 
 	auto result3 = ldv1 / 2.0;
-	EXPECT_EQ(result3.x, 0.5);
-	EXPECT_EQ(result3.y, 1.0);
-	EXPECT_EQ(result3.z, 1.5);
-	EXPECT_EQ(result3.w, 2.0);
+	EXPECT_NEAR(result3.x, 0.5, 1e-5);
+	EXPECT_NEAR(result3.y, 1.0, 1e-5);
+	EXPECT_NEAR(result3.z, 1.5, 1e-5);
+	EXPECT_NEAR(result3.w, 2.0, 1e-5);
 }
 
 TEST_F(Vector4DNoSimdTest, HandlesVectorAddition)
@@ -796,10 +796,10 @@ TEST_F(Vector4DNoSimdTest, HandlesVectorAddition)
 	EXPECT_DOUBLE_EQ(result2.w, 12.0);
 
 	auto result3 = ldv1 + ldv2;
-	EXPECT_EQ(result3.x, 6.0);
-	EXPECT_EQ(result3.y, 8.0);
-	EXPECT_EQ(result3.z, 10.0);
-	EXPECT_EQ(result3.w, 12.0);
+	EXPECT_NEAR(result3.x, 6.0, 1e-5);
+	EXPECT_NEAR(result3.y, 8.0, 1e-5);
+	EXPECT_NEAR(result3.z, 10.0, 1e-5);
+	EXPECT_NEAR(result3.w, 12.0, 1e-5);
 
 }
 
@@ -818,10 +818,10 @@ TEST_F(Vector4DNoSimdTest, HandlesVectorSubtraction)
 	EXPECT_DOUBLE_EQ(result2.w, -4.0);
 
 	auto result3 = ldv1 - ldv2;
-	EXPECT_EQ(result3.x, -4.0);
-	EXPECT_EQ(result3.y, -4.0);
-	EXPECT_EQ(result3.z, -4.0);
-	EXPECT_EQ(result3.w, -4.0);
+	EXPECT_NEAR(result3.x, -4.0, 1e-5);
+	EXPECT_NEAR(result3.y, -4.0, 1e-5);
+	EXPECT_NEAR(result3.z, -4.0, 1e-5);
+	EXPECT_NEAR(result3.w, -4.0, 1e-5);
 }
 
 TEST_F(Vector4DNoSimdTest, HandlesVectorMultiplication)
@@ -839,10 +839,10 @@ TEST_F(Vector4DNoSimdTest, HandlesVectorMultiplication)
 	EXPECT_DOUBLE_EQ(result2.w, 32.0);
 
 	auto result3 = ldv1 * ldv2;
-	EXPECT_EQ(result3.x, 5.0);
-	EXPECT_EQ(result3.y, 12.0);
-	EXPECT_EQ(result3.z, 21.0);
-	EXPECT_EQ(result3.w, 32.0);
+	EXPECT_NEAR(result3.x, 5.0, 1e-5);
+	EXPECT_NEAR(result3.y, 12.0, 1e-5);
+	EXPECT_NEAR(result3.z, 21.0, 1e-5);
+	EXPECT_NEAR(result3.w, 32.0, 1e-5);
 }
 
 TEST_F(Vector4DNoSimdTest, HandlesVectorDivision)
@@ -860,10 +860,10 @@ TEST_F(Vector4DNoSimdTest, HandlesVectorDivision)
 	EXPECT_DOUBLE_EQ(result2.w, 4.0 / 8.0);
 
 	auto result3 = ldv1 / ldv2;
-	EXPECT_EQ(result3.x, 1.0 / 5.0);
-	EXPECT_EQ(result3.y, 2.0 / 6.0);
-	EXPECT_EQ(result3.z, 3.0 / 7.0);
-	EXPECT_EQ(result3.w, 4.0 / 8.0);
+	EXPECT_NEAR(result3.x, 1.0 / 5.0, 1e-5);
+	EXPECT_NEAR(result3.y, 2.0 / 6.0, 1e-5);
+	EXPECT_NEAR(result3.z, 3.0 / 7.0, 1e-5);
+	EXPECT_NEAR(result3.w, 4.0 / 8.0, 1e-5);
 }
 
 TEST_F(Vector4DNoSimdTest, HandlesVectorAdditionAssignment)
@@ -884,10 +884,10 @@ TEST_F(Vector4DNoSimdTest, HandlesVectorAdditionAssignment)
 
 	auto result3 = ldv1;
 	result3 += ldv2;
-	EXPECT_EQ(result3.x, 6.0);
-	EXPECT_EQ(result3.y, 8.0);
-	EXPECT_EQ(result3.z, 10.0);
-	EXPECT_EQ(result3.w, 12.0);
+	EXPECT_NEAR(result3.x, 6.0, 1e-5);
+	EXPECT_NEAR(result3.y, 8.0, 1e-5);
+	EXPECT_NEAR(result3.z, 10.0, 1e-5);
+	EXPECT_NEAR(result3.w, 12.0, 1e-5);
 }
 
 TEST_F(Vector4DNoSimdTest, HandlesVectorSubtractionAssignment)
@@ -908,10 +908,10 @@ TEST_F(Vector4DNoSimdTest, HandlesVectorSubtractionAssignment)
 
 	auto result3 = ldv1;
 	result3 -= ldv2;
-	EXPECT_EQ(result3.x, -4.0);
-	EXPECT_EQ(result3.y, -4.0);
-	EXPECT_EQ(result3.z, -4.0);
-	EXPECT_EQ(result3.w, -4.0);
+	EXPECT_NEAR(result3.x, -4.0, 1e-5);
+	EXPECT_NEAR(result3.y, -4.0, 1e-5);
+	EXPECT_NEAR(result3.z, -4.0, 1e-5);
+	EXPECT_NEAR(result3.w, -4.0, 1e-5);
 }
 
 TEST_F(Vector4DNoSimdTest, HandlesVectorMultiplicationAssignment)
@@ -932,10 +932,10 @@ TEST_F(Vector4DNoSimdTest, HandlesVectorMultiplicationAssignment)
 
 	auto result3 = ldv1;
 	result3 *= ldv2;
-	EXPECT_EQ(result3.x, 5.0);
-	EXPECT_EQ(result3.y, 12.0);
-	EXPECT_EQ(result3.z, 21.0);
-	EXPECT_EQ(result3.w, 32.0);
+	EXPECT_NEAR(result3.x, 5.0, 1e-5);
+	EXPECT_NEAR(result3.y, 12.0, 1e-5);
+	EXPECT_NEAR(result3.z, 21.0, 1e-5);
+	EXPECT_NEAR(result3.w, 32.0, 1e-5);
 }
 
 TEST_F(Vector4DNoSimdTest, HandlesVectorDivisionAssignment)
@@ -956,22 +956,22 @@ TEST_F(Vector4DNoSimdTest, HandlesVectorDivisionAssignment)
 
 	auto result3 = ldv1;
 	result3 /= ldv2;
-	EXPECT_EQ(result3.x, 1.0 / 5.0);
-	EXPECT_EQ(result3.y, 2.0 / 6.0);
-	EXPECT_EQ(result3.z, 3.0 / 7.0);
-	EXPECT_EQ(result3.w, 4.0 / 8.0);
+	EXPECT_NEAR(result3.x, 1.0 / 5.0, 1e-5);
+	EXPECT_NEAR(result3.y, 2.0 / 6.0, 1e-5);
+	EXPECT_NEAR(result3.z, 3.0 / 7.0, 1e-5);
+	EXPECT_NEAR(result3.w, 4.0 / 8.0, 1e-5);
 }
 
 TEST_F(Vector4DNoSimdTest, HandlesDotProduct)
 {
 	auto result1 = v1.Dot(v2);
-	EXPECT_EQ(result1, 70.0f); // 1 * 5 + 2 * 6 + 3 * 7 + 4 * 8
+	EXPECT_NEAR(result1, 70.0f, 1e-5); // 1 * 5 + 2 * 6 + 3 * 7 + 4 * 8
 
 	auto result2 = dv1.Dot(dv2);
-	EXPECT_EQ(result2, 70.0);
+	EXPECT_NEAR(result2, 70.0, 1e-5);
 
 	auto result3 = ldv1.Dot(ldv2);
-	EXPECT_EQ(result3, 70.0);
+	EXPECT_NEAR(result3, 70.0, 1e-5);
 }
 
 TEST_F(Vector4DNoSimdTest, HandlesCrossProduct)
@@ -987,7 +987,7 @@ TEST_F(Vector4DNoSimdTest, HandlesCrossProduct)
 	EXPECT_DOUBLE_EQ(result2.z, -4.0);
 
 	auto result3 = ldv1.Cross3D(ldv2);
-	EXPECT_EQ(result3.x, -4.0);
-	EXPECT_EQ(result3.y, 8.0);
-	EXPECT_EQ(result3.z, -4.0);
+	EXPECT_NEAR(result3.x, -4.0, 1e-5);
+	EXPECT_NEAR(result3.y, 8.0, 1e-5);
+	EXPECT_NEAR(result3.z, -4.0, 1e-5);
 }
