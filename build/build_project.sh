@@ -18,3 +18,8 @@ if [ "$1" = "compile_commands" ]; then
 fi
 
 cmake -G "$GENERATOR" -DPULSARION_LIBRARY_TYPE="$LIBRARY_TYPE" -DCMAKE_BUILD_TYPE="$BUILD_TYPE" "$GENERATE_COMPILE_COMMANDS" "$BUILD_DIR"
+
+if [ "$1" = "compile_commands" ]; then
+    # Move compile_commands.json to project root
+    mv compile_commands.json ../
+fi

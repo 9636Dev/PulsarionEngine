@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.27)
-project(PulsarionProject)
+project(PulsarionEngine VERSION 0.0.1 DESCRIPTION "A game engine written in C++")
 
 add_compile_definitions(
     $<$<CONFIG:Debug>:SPDLOG_ACTIVE_LEVEL=0>

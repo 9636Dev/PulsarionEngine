@@ -19,7 +19,7 @@ int g = 0;
 float h = 0.0;
 bool i = true;
 char j = 'a';
-// There are no string types for PSHL, since it is a shader language
+// There are no strings in PSHL
 // Test for auto, which is compiler type deduction
 auto k = 0.0f;  
 

@@ -7,3 +7,6 @@
 [submodule "PulsarionShaderLanguage"]
 	path = PulsarionShaderLanguage
 	url = https://github.com/HW9636/PulsarionShaderLanguage
+[submodule "PulsarionCore"]
+	path = PulsarionCore
+	url = https://github.com/HW9636/PulsarionCore
