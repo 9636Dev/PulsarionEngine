@@ -4,6 +4,7 @@ set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 set(PULSARION_WINDOWING_SOURCES
+    src/PulsarionWindowing/Core.hpp
     src/PulsarionWindowing/Window.hpp
     src/PulsarionWindowing/Event/Event.hpp
     src/PulsarionWindowing/Event/Events.hpp
@@ -26,6 +27,7 @@ if (NOT DEFINED PULSARION_LIBRARY_TYPE)
     return()
 endif()
 
+
 if (NOT DEFINED PULSARION_RENDERER)
     message(FATAL_ERROR "PULSARION_RENDERER is not defined, please include PulsarionCore first!")
     return()
@@ -33,8 +35,13 @@ endif()
 
 add_library(PulsarionWindowing ${PULSARION_LIBRARY_TYPE} ${PULSARION_WINDOWING_SOURCES} ${PULSARION_WINDOWING_PLATFORM_SPECIFIC_SOURCES})
 
+if (PULSARION_LIBRARY_TYPE STREQUAL "SHARED")
+    target_compile_definitions(PulsarionWindowing PUBLIC PULSARION_WINDOWING_BUILD_DLL)
+endif()
+
 target_include_directories(PulsarionWindowing PUBLIC src)
 
+add_dependencies(PulsarionWindowing PulsarionMath)
 target_link_libraries(PulsarionWindowing PUBLIC Pulsarion::Core)
 target_link_libraries(PulsarionWindowing PUBLIC Pulsarion::Math)
 

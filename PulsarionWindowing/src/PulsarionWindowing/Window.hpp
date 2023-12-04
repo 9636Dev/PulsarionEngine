@@ -2,7 +2,8 @@
 
 #include <PulsarionCore/Core.hpp>
 
-#include "PulsarionWindowing/Event/Events.hpp"
+#include "Event/Events.hpp"
+#include "Core.hpp"
 
 #include <string>
 #include <functional>
@@ -12,7 +13,7 @@ namespace Pulsarion::Windowing
 {
 	using EventCallbackFn = std::function<void(Event&)>;
 
-	struct PULSARION_API WindowCreateInfo
+	struct WindowCreateInfo
 	{
 		std::string Title;
 		std::uint32_t Width;
@@ -29,7 +30,7 @@ namespace Pulsarion::Windowing
 		}
 	};
 
-	struct PULSARION_API WindowInfo // This is stored inside the window to synchronize the window with the window info.
+	struct WindowInfo // This is stored inside the window to synchronize the window with the window info.
 	{
 		std::string Title;
 		std::uint32_t Width;
@@ -50,10 +51,10 @@ namespace Pulsarion::Windowing
 		}
 	};
 	
-	class PULSARION_API Window
+	class Window
 	{
 	public:
-		friend std::shared_ptr<Window> CreateWindow(const WindowCreateInfo& info);
+		friend PULSARION_WINDOWING_API std::shared_ptr<Window> CreateWindow(const WindowCreateInfo& info);
 
 		virtual ~Window() = default;
 
@@ -82,5 +83,5 @@ namespace Pulsarion::Windowing
 		WindowInfo m_Info;
 	};
 
-	extern PULSARION_API std::shared_ptr<Window> CreateWindow(const WindowCreateInfo& info = WindowCreateInfo());
+	extern PULSARION_WINDOWING_API std::shared_ptr<Window> CreateWindow(const WindowCreateInfo& info = WindowCreateInfo());
 }

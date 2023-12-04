@@ -8,7 +8,7 @@
 #include <sstream>
 
 namespace Pulsarion::Windowing {
-    class PULSARION_API MouseMovedEvent : public Event {
+    class MouseMovedEvent : public Event {
     public:
         MouseMovedEvent(const float p_MouseX, const float p_MouseY) :
             m_MouseX(p_MouseX), m_mouseY(p_MouseY) {}
@@ -30,7 +30,7 @@ namespace Pulsarion::Windowing {
         const float m_mouseY;
     };
 
-    class PULSARION_API MouseEnterEvent : public Event {
+    class MouseEnterEvent : public Event {
     public:
         MouseEnterEvent() = default;
 
@@ -42,7 +42,7 @@ namespace Pulsarion::Windowing {
         virtual std::uint32_t GetCategoryFlags() const override { return static_cast<std::uint32_t>(EventCategory::Mouse) | static_cast<std::uint32_t>(EventCategory::Input); }
     };
     
-    class PULSARION_API MouseLeaveEvent : public Event {
+    class MouseLeaveEvent : public Event {
     public:
         MouseLeaveEvent() = default;
 
@@ -54,7 +54,7 @@ namespace Pulsarion::Windowing {
         virtual std::uint32_t GetCategoryFlags() const override { return static_cast<std::uint32_t>(EventCategory::Mouse) | static_cast<std::uint32_t>(EventCategory::Input); }
     };
 
-    class PULSARION_API MouseScrollEvent : public Event {
+    class MouseScrollEvent : public Event {
     public:
         MouseScrollEvent(const float p_OffsetX, const float p_OffsetY) :
             m_OffsetX(p_OffsetX), m_OffsetY(p_OffsetY) {}
@@ -76,7 +76,7 @@ namespace Pulsarion::Windowing {
         const float m_OffsetY;
     };
 
-    class PULSARION_API MouseButtonEvent : public Event {
+    class MouseButtonEvent : public Event {
     public:
         MouseCode GetMouseButton() const { return m_Button; }
 
@@ -88,7 +88,7 @@ namespace Pulsarion::Windowing {
         MouseCode m_Button;
     };
 
-    class PULSARION_API MouseButtonPressedEvent : public MouseButtonEvent {
+    class MouseButtonPressedEvent : public MouseButtonEvent {
     public:
         MouseButtonPressedEvent(const MouseCode button)
             : MouseButtonEvent(button) {};
@@ -103,7 +103,7 @@ namespace Pulsarion::Windowing {
         EVENT_CLASS_TYPE(MouseButtonPressed)
     };
 
-    class PULSARION_API MouseButtonReleasedEvent : public MouseButtonEvent
+    class MouseButtonReleasedEvent : public MouseButtonEvent
     {
     public:
         MouseButtonReleasedEvent(const MouseCode button)

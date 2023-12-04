@@ -11,7 +11,7 @@
 
 namespace Pulsarion::Windowing {
 
-    class PULSARION_API KeyEvent : public Event
+    class KeyEvent : public Event
     {
     public:
         KeyCode GetKeyCode() const { return m_KeyCode; }
@@ -24,7 +24,7 @@ namespace Pulsarion::Windowing {
         KeyCode m_KeyCode;
     };
 
-    class PULSARION_API KeyPressedEvent : public KeyEvent
+    class KeyPressedEvent : public KeyEvent
     {
     public:
         KeyPressedEvent(const KeyCode p_Keycode, bool p_IsRepeat = false)
@@ -44,7 +44,7 @@ namespace Pulsarion::Windowing {
         bool m_IsRepeat;
     };
 
-    class PULSARION_API KeyReleasedEvent : public KeyEvent
+    class KeyReleasedEvent : public KeyEvent
     {
     public:
         KeyReleasedEvent(const KeyCode p_Keycode)
@@ -60,7 +60,7 @@ namespace Pulsarion::Windowing {
         EVENT_CLASS_TYPE(KeyReleased);
     };
 
-    class PULSARION_API KeyTypedEvent : public KeyEvent
+    class KeyTypedEvent : public KeyEvent
     {
     public:
         KeyTypedEvent(const KeyCode p_Keycode)
