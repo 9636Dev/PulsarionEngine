@@ -16,6 +16,8 @@ FetchContent_Declare(
 set(BENCHMARK_ENABLE_TESTING OFF CACHE BOOL "Suppressing benchmark's tests" FORCE)
 
 FetchContent_MakeAvailable(googlebenchmark)
+# Suppress warnings from Google Benchmark
+target_compile_options(benchmark PRIVATE -w)
 
 set(PULSARION_BENCHMARK_SOURCE
     src/VectorBenchmark.cpp

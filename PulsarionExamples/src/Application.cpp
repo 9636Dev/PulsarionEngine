@@ -8,6 +8,9 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     PULSARION_ASSERT(argc == 1, "argc must be 1");
     PULSARION_RUN_IF_DEBUG(PULSARION_LOG_DEBUG("Hello from Debug!"));
     PULSARION_LOG_INFO("Hello, PulsarionCore!");
+    PULSARION_LOG_INFO("SpdLog Level: {}", SPDLOG_ACTIVE_LEVEL);
+
+    std::exit(0); // TODO: Remove this after shader testing
 
     auto window = Pulsarion::Windowing::CreateWindow(Pulsarion::Windowing::WindowCreateInfo());
     window->SetEventCallback([](const Pulsarion::Windowing::Event& event)

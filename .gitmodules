@@ -1,9 +1,9 @@
-[submodule "PulsarionCore/vendor/spdlog"]
-	path = PulsarionCore/vendor/spdlog
-	url = https://github.com/gabime/spdlog
 [submodule "PulsarionMath"]
 	path = PulsarionMath
 	url = https://github.com/HW9636/PulsarionMath
 [submodule "PulsarionWindowing/vendor/glfw"]
 	path = PulsarionWindowing/vendor/glfw
 	url = https://github.com/glfw/glfw
+[submodule "PulsarionShaderLanguage"]
+	path = PulsarionShaderLanguage
+	url = https://github.com/HW9636/PulsarionShaderLanguage

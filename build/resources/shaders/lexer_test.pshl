@@ -1,0 +1,50 @@
+// This is a lexer test for PSHL. It will include all the features, even if they don't make sense logically
+
+// This is a using test
+using a = vec4; 
+
+// This is a struct test
+struct b {
+    int c;
+    float d;
+};
+
+// This is a function test
+int e(int f) {
+    return f;
+}
+
+// Variable tests
+int g = 0;
+float h = 0.0;
+bool i = true;
+char j = 'a';
+// There are no string types for PSHL, since it is a shader language
+// Test for auto, which is compiler type deduction
+auto k = 0.0f;  
+
+// More tests for numbers in different formats
+int l = 0b1010;
+int m = 0x1010;
+int n = 0o1010;
+int o = base(10, 1010); // This is a special keyword in PSHL that allows custom bases that are less than 16 (hexadecimal)
+
+float p = 0.0f;
+float q = 0.0e10f;
+float r = 0.0e-10f;
+float s = 0.0e+10f;
+float t = 0e10f;
+float u = 0e-10f;
+float v = 0e+10f;
+
+// Test for the special keyword 'default', which can be used for variable assignments as well as switch statements
+int w = default; // This is the default value for an int, which is 0. It will also work without default, and just putting 'int w;'
+float x = default; // This is the default value for a float, which is 0.0f. It will also work without default, and just putting 'float x;'
+bool y = default; // This is the default value for a bool, which is false. It will also work without default, and just putting 'bool y;'
+char z = default; // This is the default value for a char, which is '\0'. It will also work without default, and just putting 'char z;'. Not that this is not a character, but a number, which is 0, which is the same as 'byte z;'
+
+vec2 aa = default; // This is the default value for a vec2, which is vec2(0.0f, 0.0f). It will also work without default, and just putting 'vec2 aa;'
+vec2 ab = {0.0f, 0.0f}; // This is an initializer list
+vec2 ac = {0.0f}; // This is an initializer list, where every value will be 0.0f
+vec2 ad = vec2(0.0f, 0.0f); // This is a constructor call
+
