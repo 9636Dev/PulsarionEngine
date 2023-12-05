@@ -4,6 +4,7 @@
 #include "PulsarionWindowing/Window.hpp"
 
 #include "PulsarionShaderLanguage/Lexer.hpp"
+#include "PulsarionShaderLanguage/Parser.hpp"
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
@@ -12,17 +13,47 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     PULSARION_LOG_INFO("Hello, PulsarionCore!");
     PULSARION_LOG_INFO("SpdLog Level: {}", SPDLOG_ACTIVE_LEVEL);
 
+    /* {
+        using namespace Pulsarion::Shader;
+        Lexer lexer(Pulsarion::File::ReadAllText("resources/shaders/lexer_test.pshl"));
+        auto token = lexer.NextToken();
+        while (token.Type != TokenType::EndOfFile)
+		{
+			PULSARION_CORE_LOG_INFO("Token: {}, '{}', {}:{}", TokenToString(token.Type), token.Value, token.Line, token.Column);
+			token = lexer.NextToken();
+		}
+    } */
+
     Pulsarion::Shader::Lexer lexer(Pulsarion::File::ReadAllText("resources/shaders/lexer_test.pshl"));
-    Pulsarion::Shader::Token token = lexer.NextToken();
-    do
+     
+    Pulsarion::Shader::Parser parser(std::move(lexer));
+	auto result = parser.Parse();
+    if (result)
+        PULSARION_LOG_DEBUG("{}", Pulsarion::Shader::SyntaxNodeToString(result.value()));
+    else
     {
-        token = lexer.NextToken();
-        PULSARION_LOG_INFO("Token: {}, '{}', {}:{}", Pulsarion::Shader::TokenToString(token.Type), token.Value, token.Line, token.Column);
-    } while (token.Type != Pulsarion::Shader::TokenType::EndOfFile);
+        PULSARION_LOG_WARN("Failed to parse file!");
 
-    std::exit(0); // TODO: Remove this after shader testing
+        for (const auto& error : parser.GetErrors())
+			PULSARION_LOG_WARN("{} at {}:{}", error.Message, error.Line, error.Column);
+    }
+    
+    {
+        using namespace Pulsarion::Shader;
+        Lexer edgeCasesLexer(Pulsarion::File::ReadAllText("resources/shaders/edge_cases.pshl"));
+        Parser edgeCasesParser(std::move(edgeCasesLexer));
+        auto edgeCasesResult = edgeCasesParser.Parse();
+        if (!edgeCasesResult.has_value())
+        {
+			PULSARION_LOG_WARN("Failed to parse edge cases file!");
 
-    auto window = Pulsarion::Windowing::CreateWindow(Pulsarion::Windowing::WindowCreateInfo());
+			for (const auto& error : edgeCasesParser.GetErrors())
+				PULSARION_LOG_WARN("{} at {}:{}", error.Message, error.Line, error.Column);
+        }
+        else PULSARION_LOG_INFO("Edge cases was parsed with no errors!");
+    }
+
+    /*auto window = Pulsarion::Windowing::CreateWindow(Pulsarion::Windowing::WindowCreateInfo());
     window->SetEventCallback([](const Pulsarion::Windowing::Event& event)
         {
 		PULSARION_LOG_TRACE(event.ToString());
@@ -31,7 +62,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     while (!window->ShouldClose())
     {
         window->OnUpdate();
-    }
+    }*/
 
     return 0;
 }

@@ -1,7 +1,19 @@
 // This is a lexer test for PSHL. It will include all the features, even if they don't make sense logically
 
+// Scope Test
+{
+    abc
+}
+
+{
+    abc,
+    {
+        def
+    }
+}
+
 // This is a using test
-using a = vec4; 
+using a = vec4; // This is not parsed correctly 
 
 // This is a struct test
 struct b {
