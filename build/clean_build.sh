@@ -4,25 +4,23 @@
 PROJECT_CLEAN_COMMAND="make clean"
 
 # Set the project directory to current direcotory and go to the upper level
-cd dirname $0
-cd ..
+cd "$(dirname "$0")"
 
-# Clean up the build directory
-$PROJECT_CLEAN_COMMAND
+# Clean up the build directory, ignore if it fails
+$PROJECT_CLEAN_COMMAND > /dev/null 2>&1
 
-# Find and Clean the files recursively
-find . -name "*.o" -exec rm -rf {} \;
-find . -name "*.a" -exec rm -rf {} \;
-find . -name "*.so" -exec rm -rf {} \;
-find . -name "*.d" -exec rm -rf {} \;
-find . -name "*.gch" -exec rm -rf {} \;
-find . -name "*.elf" -exec rm -rf {} \;
+rm -rf bin
+rm -rf lib
 
-# Clean up CMake Cache, and XCode project files
-find . -name "CMakeCache.txt" -exec rm -rf {} \;
-find . -name "CMakeFiles" -exec rm -rf {} \;
-find . -name "cmake_install.cmake" -exec rm -rf {} \;
-find . -name "CMakeScripts" -exec rm -rf {} \;
-find . -name "Makefile" -exec rm -rf {} \;
-find . -name "*.xcodeproj" -exec rm -rf {} \;
-find . -name "*.xcworkspace" -exec rm -rf {} \;
+rm -rf PulsarionCore
+rm -rf PulsarionTests
+rm -rf PulsarionExamples
+rm -rf PulsarionMath
+rm -rf PulsarionShaderLanguage
+rm -rf PulsarionWindowing
+rm -rf PulsarionBenchmarks
+
+rm Makefile
+rm CMakeCache.txt
+rm cmake_install.cmake
+rm -rf CMakeFiles
