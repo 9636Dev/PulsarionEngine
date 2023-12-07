@@ -58,7 +58,7 @@ int Add(int a, int b) {
 // Function with Nested Scopes
 void ComplexFunction() {
     if (true) {
-        struct LocalStruct {
+        struct LocalStruct { // This is not valid logically, but it should be syntactically
             int member;
         };
         LocalStruct ls = {10};
