@@ -27,30 +27,9 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     Pulsarion::Shader::Lexer lexer(Pulsarion::File::ReadAllText("resources/shaders/lexer_test.pshl"));
      
     Pulsarion::Shader::Parser parser(std::move(lexer));
-	auto result = parser.Parse();
-    if (result)
-        PULSARION_LOG_DEBUG("{}", Pulsarion::Shader::SyntaxNodeToString(result.value()));
-    else
+    while (parser.ReadToken().Type != Pulsarion::Shader::TokenType::EndOfFile)
     {
-        PULSARION_LOG_WARN("Failed to parse file!");
-
-        for (const auto& error : parser.GetErrors())
-			PULSARION_LOG_WARN("{} at {}:{}", error.Message, error.Line, error.Column);
-    }
-    
-    {
-        using namespace Pulsarion::Shader;
-        Lexer edgeCasesLexer(Pulsarion::File::ReadAllText("resources/shaders/edge_cases.pshl"));
-        Parser edgeCasesParser(std::move(edgeCasesLexer));
-        auto edgeCasesResult = edgeCasesParser.Parse();
-        if (!edgeCasesResult.has_value())
-        {
-			PULSARION_LOG_WARN("Failed to parse edge cases file!");
-
-			for (const auto& error : edgeCasesParser.GetErrors())
-				PULSARION_LOG_WARN("{} at {}:{}", error.Message, error.Line, error.Column);
-        }
-        else PULSARION_LOG_INFO("Edge cases was parsed with no errors!");
+        parser.ReadToken(); // We add a breakpoint here to see the tokens
     }
 
     /*auto window = Pulsarion::Windowing::CreateWindow(Pulsarion::Windowing::WindowCreateInfo());
