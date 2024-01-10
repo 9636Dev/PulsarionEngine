@@ -15,6 +15,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
     Pulsarion::Shader::Lexer lexer(Pulsarion::File::ReadAllText("resources/shaders/lexer_test.pshl"));
     Pulsarion::Shader::Parser parser(std::move(lexer));
+    auto result = parser.Parse();
+    PULSARION_LOG_INFO("{}", result->ToString());
 
     /*auto window = Pulsarion::Windowing::CreateWindow(Pulsarion::Windowing::WindowCreateInfo());
     window->SetEventCallback([](const Pulsarion::Windowing::Event& event)
