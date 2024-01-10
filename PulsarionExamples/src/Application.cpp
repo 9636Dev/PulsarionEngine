@@ -13,24 +13,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     PULSARION_LOG_INFO("Hello, PulsarionCore!");
     PULSARION_LOG_INFO("SpdLog Level: {}", SPDLOG_ACTIVE_LEVEL);
 
-    /* {
-        using namespace Pulsarion::Shader;
-        Lexer lexer(Pulsarion::File::ReadAllText("resources/shaders/lexer_test.pshl"));
-        auto token = lexer.NextToken();
-        while (token.Type != TokenType::EndOfFile)
-		{
-			PULSARION_CORE_LOG_INFO("Token: {}, '{}', {}:{}", TokenToString(token.Type), token.Value, token.Line, token.Column);
-			token = lexer.NextToken();
-		}
-    } */
-
     Pulsarion::Shader::Lexer lexer(Pulsarion::File::ReadAllText("resources/shaders/lexer_test.pshl"));
-     
     Pulsarion::Shader::Parser parser(std::move(lexer));
-    while (parser.ReadToken().Type != Pulsarion::Shader::TokenType::EndOfFile)
-    {
-        parser.ReadToken(); // We add a breakpoint here to see the tokens
-    }
 
     /*auto window = Pulsarion::Windowing::CreateWindow(Pulsarion::Windowing::WindowCreateInfo());
     window->SetEventCallback([](const Pulsarion::Windowing::Event& event)
