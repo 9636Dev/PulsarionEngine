@@ -13,12 +13,13 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     PULSARION_LOG_INFO("Hello, PulsarionCore!");
     PULSARION_LOG_INFO("SpdLog Level: {}", SPDLOG_ACTIVE_LEVEL);
 
-    Pulsarion::Shader::Lexer lexer(Pulsarion::File::ReadAllText("resources/shaders/lexer_test.pshl"));
-    Pulsarion::Shader::Parser parser(std::move(lexer));
-    auto result = parser.Parse();
-    PULSARION_LOG_INFO("{}", result->ToString());
+    using namespace Pulsarion::Shader;
 
-    /*auto window = Pulsarion::Windowing::CreateWindow(Pulsarion::Windowing::WindowCreateInfo());
+    Lexer lexer(Pulsarion::File::ReadAllText("resources/shaders/lexer_test.pshl"));
+    Parser parser(std::move(lexer));
+
+
+    auto window = Pulsarion::Windowing::CreateWindow(Pulsarion::Windowing::WindowCreateInfo());
     window->SetEventCallback([](const Pulsarion::Windowing::Event& event)
         {
 		PULSARION_LOG_TRACE(event.ToString());
@@ -27,7 +28,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     while (!window->ShouldClose())
     {
         window->OnUpdate();
-    }*/
+    }
 
     return 0;
 }
