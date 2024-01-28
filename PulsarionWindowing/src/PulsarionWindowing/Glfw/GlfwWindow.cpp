@@ -112,6 +112,12 @@ namespace Pulsarion::Windowing
     private:
         static void GLFWErrorCallback(int error, const char* description)
         {
+            if (error == GLFW_VERSION_UNAVAILABLE)
+            {
+                PULSARION_CORE_LOG_INFO("OpenGL version unavailable: {0}", description);
+                return;
+            }
+
             PULSARION_CORE_LOG_ERROR("GLFW Error ({0}): {1}", error, description);
         }
 
@@ -149,7 +155,7 @@ namespace Pulsarion::Windowing
     int32_t GLFW::s_GLVersionMinor = 0;
 
 	GlfwWindow::GlfwWindow(const WindowCreateInfo& info)
-		: Window(info)
+		: Window(info), m_Cursor(nullptr), m_Title(info.Title)
 	{
 #ifdef PULSARION_RENDERER_OPENGL
 		m_Window = GLFW::NewWindow(m_Info);
@@ -189,7 +195,64 @@ namespace Pulsarion::Windowing
 
     void GlfwWindow::SetTitle(const std::string& title)
     {
+        m_Title = title;
 		glfwSetWindowTitle(m_Window, title.c_str());
+    }
+
+    std::string GlfwWindow::GetTitle() const
+    {
+        return m_Title;
+    }
+
+    void GlfwWindow::SetCursorShape(StandardCursorShape shape)
+    {
+        std::int32_t glfwShape = 0;
+        switch (shape)
+        {
+        case StandardCursorShape::Arrow:
+            glfwShape = GLFW_ARROW_CURSOR;
+            break;
+        case StandardCursorShape::IBeam:
+            glfwShape = GLFW_IBEAM_CURSOR;
+            break;
+        case StandardCursorShape::Crosshair:
+            glfwShape = GLFW_CROSSHAIR_CURSOR;
+            break;
+        case StandardCursorShape::Hand:
+            glfwShape = GLFW_HAND_CURSOR;
+            break;
+        case StandardCursorShape::HResize:
+            glfwShape = GLFW_HRESIZE_CURSOR;
+            break;
+        case StandardCursorShape::VResize:
+            glfwShape = GLFW_VRESIZE_CURSOR;
+            break;
+        case StandardCursorShape::NWSEResize:
+            glfwShape = GLFW_RESIZE_NWSE_CURSOR;
+            break;
+        case StandardCursorShape::NESWResize:
+            glfwShape = GLFW_RESIZE_NESW_CURSOR;
+            break;
+        case StandardCursorShape::AllResize:
+            glfwShape = GLFW_RESIZE_ALL_CURSOR;
+            break;
+        case StandardCursorShape::NotAllowed:
+            glfwShape = GLFW_NOT_ALLOWED_CURSOR;
+            break;
+        default:
+            PULSARION_CORE_LOG_WARN("Unknown cursor shape: {}", static_cast<std::int32_t>(shape));
+            return;
+        }
+
+        SetCursor(glfwCreateStandardCursor(glfwShape));
+    }
+
+    void GlfwWindow::SetCursor(GLFWcursor* cursor)
+    {
+        if (m_Cursor != nullptr)
+            glfwDestroyCursor(m_Cursor);
+        m_Cursor = cursor;
+        glfwSetCursor(m_Window, m_Cursor);
     }
 
     void GlfwWindow::SetCallbacks()

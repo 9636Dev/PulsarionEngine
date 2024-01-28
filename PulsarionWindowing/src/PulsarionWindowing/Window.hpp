@@ -50,6 +50,20 @@ namespace Pulsarion::Windowing
 		{
 		}
 	};
+
+    enum class StandardCursorShape
+    {
+        Arrow,
+        IBeam,
+        Crosshair,
+        Hand,
+        HResize,
+        VResize,
+        NWSEResize,
+        NESWResize,
+        AllResize,
+        NotAllowed,
+    };
 	
 	class Window
 	{
@@ -69,8 +83,10 @@ namespace Pulsarion::Windowing
 		inline virtual bool IsVSync() const { return m_Info.VSync; };
 
 		virtual void SetTitle(const std::string& title) = 0;
+        virtual std::string GetTitle() const = 0;
 		virtual void SetFullscreen(bool fullscreen) = 0;
 		inline virtual bool IsFullscreen() const { return m_Info.Fullscreen; };
+        virtual void SetCursorShape(StandardCursorShape shape) = 0;
 
 		virtual void* GetNativeWindow() const = 0;
 

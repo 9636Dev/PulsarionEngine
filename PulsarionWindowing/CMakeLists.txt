@@ -41,9 +41,12 @@ endif()
 
 target_include_directories(PulsarionWindowing PUBLIC src)
 
+add_dependencies(PulsarionWindowing PulsarionCore)
 add_dependencies(PulsarionWindowing PulsarionMath)
+#add_dependencies(PulsarionWindowing PulsarionMedia)
 target_link_libraries(PulsarionWindowing PUBLIC Pulsarion::Core)
 target_link_libraries(PulsarionWindowing PUBLIC Pulsarion::Math)
+#target_link_libraries(PulsarionWindowing PUBLIC Pulsarion::Media)
 
 # Link GLFW if we are using Metal or OpenGL
 if (PULSARION_RENDERER STREQUAL "Metal" OR PULSARION_RENDERER STREQUAL "OpenGL")

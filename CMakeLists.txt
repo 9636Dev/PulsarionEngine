@@ -27,10 +27,10 @@ set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 # Pulsarion Dependencies
 add_subdirectory(PulsarionCore)
 add_subdirectory(PulsarionMath)
+add_subdirectory(PulsarionMedia)
 add_subdirectory(PulsarionWindowing)
 add_subdirectory(PulsarionShaderLanguage)
 
-add_subdirectory(PulsarionTests)
 add_subdirectory(PulsarionExamples)
 add_subdirectory(PulsarionBenchmarks)
 
@@ -38,3 +38,4 @@ add_library(Pulsarion::Math ALIAS PulsarionMath)
 add_library(Pulsarion::Core ALIAS PulsarionCore)
 add_library(Pulsarion::Windowing ALIAS PulsarionWindowing)
 add_library(Pulsarion::ShaderLanguage ALIAS PulsarionShaderLanguage)
+add_library(Pulsarion::Media ALIAS PulsarionMedia)
