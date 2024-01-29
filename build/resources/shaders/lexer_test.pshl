@@ -1,4 +1,4 @@
-int a;
+int a = static_cast<int>(1.5f);
 [[annotated]] double b = 0.0;
 float c = 1.2f;
 vec3 d(1,2,3);
