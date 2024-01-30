@@ -1,3 +1,6 @@
+int min(int, int b);
+struct vec3;
+
 int a = static_cast<int>(1.5f);
 [[annotated]] double b = 0.0;
 float c = 1.2f;
@@ -7,6 +10,16 @@ vec3 d(1,2,3);
 //a == d || e
 
 //a && b || c == d
-a++ + ++b * c[2] > d && e <= f.j(-1, 2) || (--g == h::i::j.k.l--)
+a++ + ++b * c[2] > d && e <= f.j(-1, 2) || (--min(a, g) == h::i::j.k.l--);
 
 
+int min(int a, int b) {
+
+}
+
+struct vec3
+{
+    float a;
+    float b;
+    float c;
+}

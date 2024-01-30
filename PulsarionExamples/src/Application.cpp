@@ -23,7 +23,7 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     {
         for (const auto& error : result.Errors)
         {
-            PULSARION_LOG_ERROR("[{0}:{1}] {2} {3}", error.Location.Line, error.Location.Column, SeverityToString(error.Severity), error.Message);
+            PULSARION_LOG_ERROR("[{0}:{1}] {2} {3} {4}", error.Location.Line, error.Location.Column, SeverityToString(error.Severity), ParserError::ErrorSourceToString(error.Source), error.Message);
         }
     }
     else
