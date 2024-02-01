@@ -10,7 +10,7 @@ vec3 d(1,2,3);
 //a == d || e
 
 //a && b || c == d
-a++ + ++b * c[2] > d && e <= f.j(-1, 2) || (--min(a, g) == h::i::j.k.l--);
+//a++ + ++b * c[2] > d && e <= f.j(-1, 2) || (--min(a, g) == h::i::j.k.l--);
 
 
 int min(int a, int b)
