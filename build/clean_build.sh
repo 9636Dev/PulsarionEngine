@@ -3,7 +3,7 @@
 
 PROJECT_CLEAN_COMMAND="make clean"
 
-# Set the project directory to current direcotory and go to the upper level
+# Set the project directory to current directory and go to the upper level
 cd "$(dirname "$0")"
 
 # Clean up the build directory, ignore if it fails
