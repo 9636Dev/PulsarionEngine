@@ -21,9 +21,17 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
     if (result.Errors.size() > 0)
     {
+        // Sort the error by increasing nesting level, since the least nested errors are the most important (probably)
+        result.Errors.sort([](const ParserError& a, const ParserError& b)
+        {
+            return a.NestingLevel < b.NestingLevel;
+        });
+
         for (const auto& error : result.Errors)
         {
-            PULSARION_LOG_ERROR("[{0}:{1}] {2} {3} {4}", error.Location.Line, error.Location.Column, SeverityToString(error.Severity), ParserError::ErrorSourceToString(error.Source), ParserError::ErrorTypeToString(error.Type));
+            PULSARION_LOG_ERROR("[{0}:{1}] {2} {3} {4} {5}", error.Location.Line, error.Location.Column,
+                SeverityToString(error.Severity), ParserError::ErrorSourceToString(error.Source),
+                error.NestingLevel, ParserError::ErrorTypeToString(error.Type));
         }
     }
     else
