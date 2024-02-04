@@ -14,8 +14,17 @@ a++ + ++b * c[2] > d && e <= f.j(-1, 2) || (--min(a, g) == h::i::j.k.l--);
 
 int min(int a, int b)
 {
-    // An arbitrary function
-    return;
+    if (a < b)
+    {
+        return a;
+    }
+
+    if (b < a)
+    {
+        return b;
+    }
+
+    return b;
 }
 
 struct vec3 {
