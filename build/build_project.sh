@@ -7,17 +7,18 @@ GENERATOR="Unix Makefiles"
 BUILD_DIR=".."
 BUILD_TYPE="Debug"
 LIBRARY_TYPE="SHARED"
-GENERATE_COMPILE_COMMANDS=
 
 # Make sure current dir is the script dir
 cd "$(dirname "$0")"
 
 
 if [ "$1" = "compile_commands" ]; then
-    GENERATE_COMPILE_COMMANDS=-DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+    echo "Generating compile_commands.json"
+    cmake -G "$GENERATOR" -DPULSARION_LIBRARY_TYPE="$LIBRARY_TYPE" -DCMAKE_BUILD_TYPE="$BUILD_TYPE" "$BUILD_DIR" -DCMAKE_EXPORT_COMPILE_COMMANDS=ON
+else
+    cmake -G "$GENERATOR" -DPULSARION_LIBRARY_TYPE="$LIBRARY_TYPE" -DCMAKE_BUILD_TYPE="$BUILD_TYPE" "$BUILD_DIR"
 fi
 
-cmake -G "$GENERATOR" -DPULSARION_LIBRARY_TYPE="$LIBRARY_TYPE" -DCMAKE_BUILD_TYPE="$BUILD_TYPE" "$GENERATE_COMPILE_COMMANDS" "$BUILD_DIR"
 
 if [ "$1" = "compile_commands" ]; then
     # Move compile_commands.json to project root

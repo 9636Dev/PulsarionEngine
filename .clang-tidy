@@ -2,6 +2,7 @@
 ---
 Checks: '-*,
 bugprone-*,
+-bugprone-easily-swappable-parameters
 mpi-*,
 cert-err52-cpp,
 cert-mem57-cpp,

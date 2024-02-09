@@ -19,10 +19,10 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     Parser parser(std::move(lexer));
     auto result = parser.Parse();
 
-    if (result.Errors.size() > 0)
+    if (!result.Errors.empty())
     {
         // Sort the error by increasing nesting level, since the least nested errors are the most important (probably)
-        result.Errors.sort([](const ParserError& a, const ParserError& b)
+        result.Errors.sort([](const Parsing::Error& a, const Parsing::Error& b)
         {
             return a.NestingLevel < b.NestingLevel;
         });
@@ -30,8 +30,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
         for (const auto& error : result.Errors)
         {
             PULSARION_LOG_ERROR("[{0}:{1}] {2} {3} {4} {5}", error.Location.Line, error.Location.Column,
-                SeverityToString(error.Severity), ParserError::ErrorSourceToString(error.Source),
-                error.NestingLevel, ParserError::ErrorTypeToString(error.Type));
+                SeverityToString(error.Severity), Parsing::Error::SourceToString(error.Source),
+                error.NestingLevel, Parsing::Error::TypeToString(error.Type));
         }
     }
     else
