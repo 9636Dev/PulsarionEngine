@@ -2,6 +2,7 @@
 ---
 Checks: '-*,
 bugprone-*,
+-bugprone-lambda-function-name
 -bugprone-easily-swappable-parameters
 mpi-*,
 cert-err52-cpp,

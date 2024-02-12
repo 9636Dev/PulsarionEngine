@@ -1,6 +1,7 @@
 #include "PulsarionCore/Assert.hpp"
 #include "PulsarionCore/Log.hpp"
 
+#include "PulsarionShaderLanguage/ParserUtil.hpp"
 #include "PulsarionWindowing/Window.hpp"
 
 #include "PulsarionShaderLanguage/Lexer.hpp"
@@ -40,10 +41,10 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
         PULSARION_LOG_INFO("{}", result.Root->ToString());
 
         PULSARION_LOG_INFO("Parsed with no errors!");
+
     }
 
-    /*
-    auto window = Pulsarion::Windowing::CreateWindow(Pulsarion::Windowing::WindowCreateInfo());
+    /*auto window = Pulsarion::Windowing::CreateWindow(Pulsarion::Windowing::WindowCreateInfo());
     window->SetEventCallback([](const Pulsarion::Windowing::Event& event)
     {
         PULSARION_LOG_TRACE(event.ToString());
@@ -54,7 +55,6 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     while (!window->ShouldClose())
     {
         window->OnUpdate();
-    }
-    */
+    }*/
     return 0;
 }
