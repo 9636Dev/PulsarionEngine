@@ -24,11 +24,12 @@ set(PULSARION_BENCHMARK_SOURCE
     src/VectorSimdBenchmark.cpp
     src/MatrixBenchmark.cpp
     src/MatrixSimdBenchmark.cpp
+    src/LexerBenchmark.cpp
     src/Benchmark.cpp
 )
 add_executable(PulsarionBenchmarks ${PULSARION_BENCHMARK_SOURCE})
 
-# Make sure to link PulsarionMath
 target_link_libraries(PulsarionBenchmarks PulsarionMath)
+target_link_libraries(PulsarionBenchmarks PulsarionShaderLanguage)
 
 target_link_libraries(PulsarionBenchmarks benchmark::benchmark)

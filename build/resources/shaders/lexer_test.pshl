@@ -30,3 +30,4 @@ struct vec3 {
     float b;
     float c;
 }
+
