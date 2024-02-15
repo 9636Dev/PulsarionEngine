@@ -19,6 +19,7 @@ rm -rf PulsarionMath
 rm -rf PulsarionShaderLanguage
 rm -rf PulsarionWindowing
 rm -rf PulsarionBenchmarks
+rm -rf PulsarionMedia
 
 rm Makefile
 rm CMakeCache.txt

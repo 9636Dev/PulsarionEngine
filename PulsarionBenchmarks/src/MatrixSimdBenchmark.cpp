@@ -1,3 +1,4 @@
+/*
 #include <benchmark/benchmark.h>
 #include <PulsarionMath/Math.hpp>
 
@@ -34,3 +35,4 @@ static void BM_SimdMat4_VecMultiply(benchmark::State& state)
 }
 
 BENCHMARK(BM_SimdMat4_VecMultiply);
+*/

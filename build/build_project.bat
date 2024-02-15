@@ -40,6 +40,10 @@ for %%x in (%*) do (
    if "%%x" == "simd_none" (
          set SIMD=NONE
    )
+   if "%%x" == "ninja" (
+         set GENERATOR="Ninja"
+         echo Using Ninja generator
+   )
 )
 
 @REM Build project
@@ -47,9 +51,8 @@ IF %GENERATE_COMPILE_COMMANDS% == 1 (
     @echo on
     cmake -G %GENERATOR% -DPULSARION_LIBRARY_TYPE=%LIBRARY_TYPE% -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DPULSARION_SIMD=%SIMD% -DCMAKE_EXPORT_COMPILE_COMMANDS=ON %BUILD_DIR%
     @echo off
-
-    if exist "%BUILD_DIR%\compile_commands.json" (
-        move "%BUILD_DIR%\compile_commands.json" %BUILD_DIR%
+    IF exist "compile_commands.json" (
+        move "compile_commands.json" %BUILD_DIR%
     )
 ) ELSE (
     @echo on
