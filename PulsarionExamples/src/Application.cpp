@@ -7,6 +7,8 @@
 #include "PulsarionShaderLanguage/Lexer.hpp"
 #include "PulsarionShaderLanguage/Parser.hpp"
 
+#include <PulsarionMath/Matrix.hpp>
+
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
     PULSARION_ASSERT(argc == 1, "argc must be 1");
@@ -44,7 +46,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
     }
 
-    /*auto window = Pulsarion::Windowing::CreateWindow(Pulsarion::Windowing::WindowCreateInfo());
+    /*
+    auto window = Pulsarion::Windowing::CreateWindow(Pulsarion::Windowing::WindowCreateInfo());
     window->SetEventCallback([](const Pulsarion::Windowing::Event& event)
     {
         PULSARION_LOG_TRACE(event.ToString());

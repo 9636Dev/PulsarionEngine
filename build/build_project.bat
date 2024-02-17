@@ -11,6 +11,7 @@ set BUILD_TYPE=Debug
 set LIBRARY_TYPE=SHARED
 set BUILD_DIR=..
 set GENERATE_COMPILE_COMMANDS=0
+set GENERATE_ASM=No
 set SIMD=SSE4.1
 
 @REM Loop through each argument
@@ -44,19 +45,24 @@ for %%x in (%*) do (
          set GENERATOR="Ninja"
          echo Using Ninja generator
    )
+
+   if "%%x" == "asm" (
+         set GENERATE_ASM=YES
+         echo Generating assembly
+   )
 )
 
 @REM Build project
 IF %GENERATE_COMPILE_COMMANDS% == 1 (
     @echo on
-    cmake -G %GENERATOR% -DPULSARION_LIBRARY_TYPE=%LIBRARY_TYPE% -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DPULSARION_SIMD=%SIMD% -DCMAKE_EXPORT_COMPILE_COMMANDS=ON %BUILD_DIR%
+    cmake -G %GENERATOR% -DPULSARION_LIBRARY_TYPE=%LIBRARY_TYPE% -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DPULSARION_SIMD=%SIMD% -DPULSARION_ASM=%GENERATE_ASM% -DCMAKE_EXPORT_COMPILE_COMMANDS=ON %BUILD_DIR%
     @echo off
     IF exist "compile_commands.json" (
         move "compile_commands.json" %BUILD_DIR%
     )
 ) ELSE (
     @echo on
-    cmake -G %GENERATOR% -DPULSARION_LIBRARY_TYPE=%LIBRARY_TYPE% -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DPULSARION_SIMD=%SIMD% %BUILD_DIR%
+    cmake -G %GENERATOR% -DPULSARION_LIBRARY_TYPE=%LIBRARY_TYPE% -DCMAKE_BUILD_TYPE=%BUILD_TYPE% -DPULSARION_SIMD=%SIMD% -DPULSARION_ASM=%GENERATE_ASM% %BUILD_DIR%
     @echo off
 )
 

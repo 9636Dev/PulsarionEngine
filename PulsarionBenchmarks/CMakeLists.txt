@@ -26,8 +26,13 @@ set(PULSARION_BENCHMARK_SOURCE
     src/MatrixSimdBenchmark.cpp
     src/LexerBenchmark.cpp
     src/Benchmark.cpp
+    # GLM
+    src/GLMMatrixBenchmark.cpp
 )
 add_executable(PulsarionBenchmarks ${PULSARION_BENCHMARK_SOURCE})
+
+add_subdirectory(vendor/glm)
+target_link_libraries(PulsarionBenchmarks glm) # We want to benchmark glm as well
 
 target_link_libraries(PulsarionBenchmarks PulsarionMath)
 target_link_libraries(PulsarionBenchmarks PulsarionShaderLanguage)

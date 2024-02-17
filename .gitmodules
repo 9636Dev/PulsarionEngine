@@ -10,3 +10,6 @@
 [submodule "PulsarionCore"]
 	path = PulsarionCore
 	url = https://github.com/HW9636/PulsarionCore
+[submodule "PulsarionBenchmarks/vendor/glm"]
+	path = PulsarionBenchmarks/vendor/glm
+	url = https://github.com/g-truc/glm
