@@ -7,8 +7,6 @@
 #include "PulsarionShaderLanguage/Lexer.hpp"
 #include "PulsarionShaderLanguage/Parser.hpp"
 
-#include <PulsarionMath/Matrix.hpp>
-
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
     PULSARION_ASSERT(argc == 1, "argc must be 1");

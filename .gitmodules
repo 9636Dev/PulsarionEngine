@@ -13,3 +13,6 @@
 [submodule "PulsarionBenchmarks/vendor/glm"]
 	path = PulsarionBenchmarks/vendor/glm
 	url = https://github.com/g-truc/glm
+[submodule "PulsarionBenchmarks/vendor/benchmark"]
+	path = PulsarionBenchmarks/vendor/benchmark
+	url = https://github.com/google/benchmark

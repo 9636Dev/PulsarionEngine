@@ -1,9 +1,6 @@
 cmake_minimum_required(VERSION 3.27)
 project(PulsarionEngine VERSION 0.0.1 DESCRIPTION "A game engine written in C++")
 
-set(PULSARION_ASM "NO" CACHE STRING "Choose whether to generate ASM")
-set_property(CACHE PULSARION_ASM PROPERTY STRINGS "NO" "YES")
-
 add_compile_definitions(
     $<$<CONFIG:Debug>:SPDLOG_ACTIVE_LEVEL=0>
     $<$<CONFIG:Release>:SPDLOG_ACTIVE_LEVEL=1>
@@ -26,15 +23,6 @@ endif()
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
 set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
 set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
-
-if (PULSARION_ASM STREQUAL "YES")
-    MESSAGE(STATUS "Pulsarion: Enabling Assembly Output")
-    if (CLANG OR GCC)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -S -fverbose-asm")
-    elif (MSVC)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /FAs")
-    endif()
-endif()
 
 # Pulsarion Dependencies
 add_subdirectory(PulsarionCore)
