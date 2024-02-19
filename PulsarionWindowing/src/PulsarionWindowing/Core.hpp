@@ -1,9 +1,0 @@
-#pragma once
-
-#include <PulsarionCore/Core.hpp>
-
-#ifdef PULSARION_WINDOWING_BUILD_DLL
-	#define PULSARION_WINDOWING_API PULSARION_DLL_EXPORT
-#else
-	#define PULSARION_WINDOWING_API PULSARION_DLL_IMPORT 
-#endif
