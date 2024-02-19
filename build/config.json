@@ -1,0 +1,26 @@
+{
+    "profiles": {
+        "Neovim": {
+            "cmake_generator": "Ninja",
+            "build_type": "Debug",
+            "library_type": "shared",
+            "compile_commands": true,
+            "math_header_only": true
+        },
+        "Benchmarking": {
+            "cmake_generator": "Ninja",
+            "build_type": "Release",
+            "library_type": "shared",
+            "compile_commands": "false",
+            "math_header_only": "true"
+        },
+        "VisualStudio": {
+            "cmake_generator": "Visual Studio 17 2022",
+            "build_type": "Debug",
+            "library_type": "shared",
+            "compile_commands": "false",
+            "math_header_only": "false"
+        }
+    },
+    "last_profile": "VisualStudio"
+}

@@ -17,6 +17,6 @@ target_include_directories(PulsarionExamples PUBLIC src)
 
 add_dependencies(PulsarionExamples Pulsarion::Windowing Pulsarion::ShaderLanguage)
 target_link_libraries(PulsarionExamples PUBLIC Pulsarion::Core)
-target_link_libraries(PulsarionExamples PUBLIC Pulsarion::Math)
+#target_link_libraries(PulsarionExamples PUBLIC Pulsarion::Math)
 target_link_libraries(PulsarionExamples PUBLIC Pulsarion::Windowing)
 target_link_libraries(PulsarionExamples PUBLIC Pulsarion::ShaderLanguage)

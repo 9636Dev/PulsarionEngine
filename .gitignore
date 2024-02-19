@@ -24,6 +24,7 @@ _deps
 !/build/*.sh
 !/build/*.bat
 !/build/*.py
+!/build/config.json
 !/build/resources/
 
 /bin/

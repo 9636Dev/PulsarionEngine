@@ -13,3 +13,6 @@
 [submodule "PulsarionBenchmarks/vendor/benchmark"]
 	path = PulsarionBenchmarks/vendor/benchmark
 	url = https://github.com/google/benchmark
+[submodule "PulsarionWindowing"]
+	path = PulsarionWindowing
+	url = https://github.com/HW9636/PulsarionWindowing
