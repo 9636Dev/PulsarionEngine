@@ -23,6 +23,7 @@ _deps
 !/build/.editorconfig
 !/build/*.sh
 !/build/*.bat
+!/build/*.py
 !/build/resources/
 
 /bin/
