@@ -41,7 +41,7 @@ BUILD_DIR = os.path.join(PROJECT_DIR, 'build')
 BINARY_DIR = os.path.join(BUILD_DIR, 'bin')
 CONFIG_TYPES = {
     "string": ConfigType("string", "A string value", lambda _: True, lambda x: x),
-    "generator": ConfigType("generator", "A CMake generator", lambda x: x in ["Ninja", "Unix Makefiles", "Visual Studio 17 2022"], lambda x: x),
+    "generator": ConfigType("generator", "A CMake generator", lambda x: x in ["Ninja", "Unix Makefiles", "Visual Studio 17 2022", "Xcode"], lambda x: x),
     "build_type": ConfigType("build_type", "A build type", lambda x: x in ["Debug", "Release", "RelWithDebugInfo"], lambda x: x),
     "boolean": ConfigType("boolean", "A boolean value", lambda x: x in ["true", "false", True, False], lambda x: x == "true" or x == True),
     "path": ConfigType("path", "A path", lambda x: os.path.exists(x), lambda x: x),

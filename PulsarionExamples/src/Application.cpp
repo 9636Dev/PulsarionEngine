@@ -1,3 +1,4 @@
+#include "PulsarionCore/Log.hpp"
 #include "PulsarionWindowing/Window.hpp"
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
@@ -11,6 +12,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     {
         window->PollEvents();
     }
+
+    PULSARION_LOG_INFO("Window closed");
 
     return 0;
 }

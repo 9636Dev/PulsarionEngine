@@ -20,7 +20,21 @@
             "library_type": "shared",
             "compile_commands": "false",
             "math_header_only": "false"
+        },
+        "NeovimUnix": {
+            "cmake_generator": "Unix Makefiles",
+            "build_type": "Debug",
+            "library_type": "shared",
+            "compile_commands": "true",
+            "math_header_only": "true"
+        },
+        "XCode": {
+            "cmake_generator": "Xcode",
+            "build_type": "Debug",
+            "library_type": "shared",
+            "compile_commands": "false",
+            "math_header_only": "true"
         }
     },
-    "last_profile": "VisualStudio"
+    "last_profile": "NeovimUnix"
 }
