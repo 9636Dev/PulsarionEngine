@@ -5,7 +5,7 @@
             "build_type": "Debug",
             "library_type": "shared",
             "compile_commands": true,
-            "math_header_only": true
+            "math_header_only": false
         },
         "Benchmarking": {
             "cmake_generator": "Ninja",
@@ -36,5 +36,5 @@
             "math_header_only": "true"
         }
     },
-    "last_profile": "NeovimUnix"
+    "last_profile": "Neovim"
 }

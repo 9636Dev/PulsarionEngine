@@ -11,8 +11,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     WindowFlags flags = WindowFlags::DefaultNoVisible | WindowFlags::Resizable;
     WindowCreationData creationData("Pulsarion Window", 800, 600, 0, 0, flags);
     //auto window = CreateUniqueWindow(creationData);
-    constexpr DebugOptions options  = { false, true, false, true, true };
-    auto window = std::make_unique<DebugWindow<options>>(creationData);
+    constexpr DebugOptions options  = { false, true, true, true, true };
+    auto window = std::make_unique<DebugWindow<options, Window>>(creationData);
     window->SetVisible(true);
 
     FrameLimiter frameLimiter(240);
