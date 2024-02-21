@@ -1,37 +1,29 @@
 #include "PulsarionCore/Log.hpp"
+#include "PulsarionWindowing/FrameLimiter.hpp"
 #include "PulsarionWindowing/Window.hpp"
+#include "PulsarionWindowing/WindowDebugger.hpp"
+
+#include <chrono>
 
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
     using namespace Pulsarion::Windowing;
-    WindowCreationData creationData("Pulsarion Window", 800, 600, 0, 0, WindowFlags::DefaultNoVisible | WindowFlags::Resizable);
-    auto window = CreateUniqueWindow(creationData);
-    window->LimitEvents(argc == 2);
-
-    window->SetOnClose([]() {
-        PULSARION_LOG_INFO("Window close event received");
-        return true;
-    });
-
-    // When the SetVisible method is called, the window will be shown and the OnWindowVisibility event will be triggered.
-    window->SetOnWindowVisibility([](bool visible) {
-        PULSARION_LOG_INFO("Window visibility event received: {}", visible ? "visible" : "hidden");
-    });
-
-    window->SetOnFocus([](bool focused) {
-        PULSARION_LOG_INFO("Window focus event received: {}", focused ? "focused" : "unfocused");
-    });
-
-    window->SetOnResize([](int width, int height) {
-        PULSARION_LOG_INFO("Window resize event received: {}x{}", width, height);
-    });
-
+    WindowFlags flags = WindowFlags::DefaultNoVisible | WindowFlags::Resizable;
+    WindowCreationData creationData("Pulsarion Window", 800, 600, 0, 0, flags);
+    //auto window = CreateUniqueWindow(creationData);
+    constexpr DebugOptions options  = { false, true, false, true, true };
+    auto window = std::make_unique<DebugWindow<options>>(creationData);
     window->SetVisible(true);
 
+    FrameLimiter frameLimiter(240);
+    auto start = std::chrono::high_resolution_clock::now();
     while (!window->ShouldClose())
     {
-        PULSARION_LOG_INFO("New frame");
+        frameLimiter.StartFrame();
+
         window->PollEvents();
+
+        frameLimiter.EndFrame();
     }
 
     PULSARION_LOG_INFO("Window closed");
