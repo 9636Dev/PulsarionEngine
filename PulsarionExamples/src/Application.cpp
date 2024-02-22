@@ -8,11 +8,11 @@
 int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 {
     using namespace Pulsarion::Windowing;
-    WindowFlags flags = WindowFlags::DefaultNoVisible | WindowFlags::Resizable;
-    WindowCreationData creationData("Pulsarion Window", 800, 600, 0, 0, flags);
-    //auto window = CreateUniqueWindow(creationData);
     constexpr DebugOptions options  = { false, true, true, true, true };
-    auto window = std::make_unique<DebugWindow<options, Window>>(creationData);
+    WindowBounds bounds(0, 0, 1280, 720);
+    WindowStyles styles = WindowStyles::NSTitled | WindowStyles::NSClosable | WindowStyles::NSMiniaturizable | WindowStyles::NSResizable;
+    WindowConfig config;
+    auto window = std::make_unique<DebugWindow<options, Window>>("Pulsarion Windowing", bounds, styles, config);
     window->SetVisible(true);
 
     FrameLimiter frameLimiter(240);
