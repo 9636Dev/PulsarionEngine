@@ -5,36 +5,44 @@
             "build_type": "Debug",
             "library_type": "shared",
             "compile_commands": true,
-            "math_header_only": false
+            "math_header_only": false,
+            "executable_files": [
+                "bin\\PulsarionExamples.exe",
+                "bin\\PulsarionMathTests.exe"
+            ]
         },
         "Benchmarking": {
             "cmake_generator": "Ninja",
             "build_type": "Release",
             "library_type": "shared",
             "compile_commands": "false",
-            "math_header_only": "true"
+            "math_header_only": "true",
+            "executable_files": []
         },
         "VisualStudio": {
             "cmake_generator": "Visual Studio 17 2022",
             "build_type": "Debug",
             "library_type": "shared",
             "compile_commands": "false",
-            "math_header_only": "false"
+            "math_header_only": "false",
+            "executable_files": []
         },
         "NeovimUnix": {
             "cmake_generator": "Unix Makefiles",
             "build_type": "Debug",
             "library_type": "shared",
             "compile_commands": "true",
-            "math_header_only": "true"
+            "math_header_only": "true",
+            "executable_files": []
         },
         "XCode": {
             "cmake_generator": "Xcode",
             "build_type": "Debug",
             "library_type": "shared",
             "compile_commands": "false",
-            "math_header_only": "true"
+            "math_header_only": "true",
+            "executable_files": []
         }
     },
-    "last_profile": "NeovimUnix"
+    "last_profile": "Neovim"
 }

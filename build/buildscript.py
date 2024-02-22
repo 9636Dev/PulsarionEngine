@@ -53,6 +53,7 @@ CONFIG_VALUES = {
     "library_type": ConfigValue("library_type", "The type of library to build", "library_type", "shared"),
     "compile_commands": ConfigValue("compile_commands", "Generate compile_commands.json", "boolean", "true"),
     "math_header_only": ConfigValue("math_header_only", "Build the math library as header only", "boolean", "false"),
+    "executable_files": [ConfigValue("executable_files", "The files to build as executables", "string", "main.cpp")], # We use this to tell it that it is an array
 }
 
 def safe_get_input(prompt: str, default_value: str) -> tuple[str, bool]:
@@ -115,6 +116,12 @@ for profile_name, prof in config['profiles'].items():
         if key not in prof:
             print(f'Profile {profile_name} is missing key {key}. \n{value.description}. \nExiting..')
             exit(1)
+        if type(value) == list:
+            for i, val in enumerate(prof[key]):
+                if not CONFIG_TYPES[value[0].type].validate(val):
+                    print(f'Profile {profile_name} has an invalid value for key {key}. \n{value[0].description}. \nExiting...')
+                    exit(1)
+            continue
         if not CONFIG_TYPES[value.type].validate(prof[key]):
             print(f'Profile {profile_name} has an invalid value for key {key}. \n{value.description}. \nExiting...')
             exit(1)
@@ -136,7 +143,8 @@ ACTIONS = {
     "run": "Run the project",
     "clean": "Clean the build directory",
     "configure": "Configure the project",
-    "exit": "Exit the program"
+    "exit": "Exit the program",
+
 }
 
 for i, (key, value) in enumerate(ACTIONS.items()):
@@ -273,6 +281,40 @@ if action == 'build':
     exit(0)
 
 if action == 'run':
-    print('Running the project...')
-    print("Not implemented yet")
+    files = []
+    for file in config['profiles'][profile]['executable_files']:
+        files.append(file)
+
+    if not files:
+        print('No executable files found. Exiting...')
+        exit(1)
+
+    for index,file in enumerate(files):
+        print(f'{index+1}. {file}')
+
+    inp, success = safe_get_input('Select an executable', files[0])
+    if not success:
+        print('Invalid input. Exiting...')
+        exit(1)
+
+    file = None
+    try:
+        f = int(inp)
+        if f < 1 or f > len(files):
+            print('Invalid input. Exiting...')
+            exit(1)
+        file = files[f-1]
+    except ValueError:
+        for f in files:
+            if f == inp:
+                file = inp
+                break
+    if not file:
+        print('Invalid input. Exiting...')
+        exit(1)
+
+    print(f'Running {file}...')
+    path = os.path.join(BUILD_DIR, file)
+    os.system(path)
+
     exit(0)
