@@ -317,6 +317,11 @@ if action == 'run':
 
     print(f'Running {file}...')
     path = os.path.join(BUILD_DIR, file)
-    os.system(path)
+    try:
+        os.system(path)
+    except KeyboardInterrupt:
+        print('Exiting...')
+    except Exception as e:
+        print(f'Error: {e}')
 
     exit(0)
