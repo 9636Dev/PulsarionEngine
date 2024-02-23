@@ -25,9 +25,8 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
 
         frameLimiter.EndFrame();
     }
-    window = nullptr; // Destroy the window
 
     PULSARION_LOG_INFO("Window closed");
-
+    window = nullptr; // Destroy the window
     return 0;
 }

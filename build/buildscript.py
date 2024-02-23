@@ -261,6 +261,8 @@ if action == 'configure':
 
     print('Generating with types:')
     for key, value in CONFIG_VALUES.items():
+        if type(value) == list:
+            continue
         print(f'{value.name}: {config["profiles"][profile][key]}')
 
     os.system(f'{CMAKE_BINARY} -G "{generator}" -DCMAKE_BUILD_TYPE={build_type} -DPULSARION_LIBRARY_TYPE={library_type} -DCMAKE_EXPORT_COMPILE_COMMANDS={compile_commands} -DPULSARION_MATH_HEADER_ONLY={math_header_only} -S {PROJECT_DIR} -B {BUILD_DIR}')

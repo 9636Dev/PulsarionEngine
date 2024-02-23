@@ -33,7 +33,10 @@
             "library_type": "shared",
             "compile_commands": "true",
             "math_header_only": "true",
-            "executable_files": []
+            "executable_files": [
+                "bin/PulsarionExamples",
+                "bin/PulsarionMathTests"
+            ]
         },
         "XCode": {
             "cmake_generator": "Xcode",
@@ -44,5 +47,5 @@
             "executable_files": []
         }
     },
-    "last_profile": "Neovim"
+    "last_profile": "NeovimUnix"
 }
