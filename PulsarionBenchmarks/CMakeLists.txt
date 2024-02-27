@@ -22,6 +22,9 @@ set(PULSARION_BENCHMARK_SOURCE
     # Pulsarion Math
     src/PMVectorBenchmark.cpp
 
+    # Pulsarion Windowing
+    src/WindowBenchmark.cpp
+
     # Pulsarion Shader Language
     src/PSLLexerBenchmark.cpp
 )
@@ -29,10 +32,12 @@ add_executable(PulsarionBenchmarks ${PULSARION_BENCHMARK_SOURCE})
 
 add_dependencies(PulsarionBenchmarks benchmark glm)
 add_dependencies(PulsarionBenchmarks PulsarionMath)
+add_dependencies(PulsarionBenchmarks PulsarionWindowing)
 add_dependencies(PulsarionBenchmarks PulsarionShaderLanguage)
 add_dependencies(PulsarionBenchmarks benchmark::benchmark)
 
 target_link_libraries(PulsarionBenchmarks glm) # We want to benchmark glm as well
 target_link_libraries(PulsarionBenchmarks PulsarionMath)
+target_link_libraries(PulsarionBenchmarks PulsarionWindowing)
 target_link_libraries(PulsarionBenchmarks PulsarionShaderLanguage)
 target_link_libraries(PulsarionBenchmarks benchmark::benchmark)
