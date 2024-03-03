@@ -5,11 +5,9 @@
             "build_type": "Debug",
             "library_type": "shared",
             "compile_commands": true,
-            "math_header_only": false,
             "executable_files": [
                 "bin\\PulsarionExamples.exe",
-                "bin\\PulsarionMathTests.exe",
-                "bin\\PulsarionBenchmarks.exe"
+                "bin\\PulsarionMathTests.exe"
             ]
         },
         "Benchmarking": {
@@ -17,15 +15,15 @@
             "build_type": "Release",
             "library_type": "shared",
             "compile_commands": "false",
-            "math_header_only": "true",
-            "executable_files": []
+            "executable_files": [
+                "bin\\PulsarionBenchmarks.exe"
+            ]
         },
         "VisualStudio": {
             "cmake_generator": "Visual Studio 17 2022",
             "build_type": "Debug",
             "library_type": "shared",
             "compile_commands": "false",
-            "math_header_only": "false",
             "executable_files": []
         },
         "NeovimUnix": {
@@ -33,7 +31,6 @@
             "build_type": "Debug",
             "library_type": "shared",
             "compile_commands": "true",
-            "math_header_only": "true",
             "executable_files": [
                 "bin/PulsarionExamples",
                 "bin/PulsarionMathTests",
@@ -45,7 +42,6 @@
             "build_type": "Release",
             "library_type": "shared",
             "compile_commands": "false",
-            "math_header_only": "true",
             "executable_files": [
                 "bin/PulsarionBenchmarks"
             ]
@@ -55,9 +51,8 @@
             "build_type": "Debug",
             "library_type": "shared",
             "compile_commands": "false",
-            "math_header_only": "true",
             "executable_files": []
         }
     },
-    "last_profile": "NeovimUnix"
+    "last_profile": "Benchmarking"
 }

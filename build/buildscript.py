@@ -52,7 +52,6 @@ CONFIG_VALUES = {
     "build_type": ConfigValue("build_type", "The build type to use", "build_type", "Debug"),
     "library_type": ConfigValue("library_type", "The type of library to build", "library_type", "shared"),
     "compile_commands": ConfigValue("compile_commands", "Generate compile_commands.json", "boolean", "true"),
-    "math_header_only": ConfigValue("math_header_only", "Build the math library as header only", "boolean", "false"),
     "executable_files": [ConfigValue("executable_files", "The files to build as executables", "string", "main.cpp")], # We use this to tell it that it is an array
 }
 
@@ -257,7 +256,6 @@ if action == 'configure':
     build_type = get_profile_config(profile, 'build_type')
     library_type = get_profile_config(profile, 'library_type')
     compile_commands = "ON" if get_profile_config(profile, 'compile_commands') else "OFF"
-    math_header_only = "ON" if get_profile_config(profile, 'math_header_only') else "OFF"
 
     print('Generating with types:')
     for key, value in CONFIG_VALUES.items():
@@ -265,7 +263,7 @@ if action == 'configure':
             continue
         print(f'{value.name}: {config["profiles"][profile][key]}')
 
-    os.system(f'{CMAKE_BINARY} -G "{generator}" -DCMAKE_BUILD_TYPE={build_type} -DPULSARION_LIBRARY_TYPE={library_type} -DCMAKE_EXPORT_COMPILE_COMMANDS={compile_commands} -DPULSARION_MATH_HEADER_ONLY={math_header_only} -S {PROJECT_DIR} -B {BUILD_DIR}')
+    os.system(f'{CMAKE_BINARY} -G "{generator}" -DCMAKE_BUILD_TYPE={build_type} -DPULSARION_LIBRARY_TYPE={library_type} -DCMAKE_EXPORT_COMPILE_COMMANDS={compile_commands} -S {PROJECT_DIR} -B {BUILD_DIR}')
 
     if compile_commands == "ON":
         print('Copying compile_commands.json to project root...', end=' ')
