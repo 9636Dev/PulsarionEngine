@@ -45,13 +45,15 @@ CONFIG_TYPES = {
     "build_type": ConfigType("build_type", "A build type", lambda x: x in ["Debug", "Release", "RelWithDebugInfo"], lambda x: x),
     "boolean": ConfigType("boolean", "A boolean value", lambda x: x in ["true", "false", True, False], lambda x: x == "true" or x == True),
     "path": ConfigType("path", "A path", lambda x: os.path.exists(x), lambda x: x),
-    "library_type": ConfigType("library_type", "The type of library to build", lambda x: x in ["shared", "static"], lambda x: x.upper())
+    "library_type": ConfigType("library_type", "The type of library to build", lambda x: x in ["shared", "static"], lambda x: x.upper()),
+    "simd_type": ConfigType("simd_type", "The SIMD type to use", lambda x: x in ["None", "SSE4.1", "AVX"], lambda x: x),
 }
 CONFIG_VALUES = {
     "cmake_generator": ConfigValue("cmake_generator", "The CMake generator to use", "generator", "Ninja"),
     "build_type": ConfigValue("build_type", "The build type to use", "build_type", "Debug"),
     "library_type": ConfigValue("library_type", "The type of library to build", "library_type", "shared"),
     "compile_commands": ConfigValue("compile_commands", "Generate compile_commands.json", "boolean", "true"),
+    "simd_type": ConfigValue("simd_type", "The SIMD type to use", "simd_type", "None"),
     "executable_files": [ConfigValue("executable_files", "The files to build as executables", "string", "main.cpp")], # We use this to tell it that it is an array
 }
 
@@ -176,34 +178,7 @@ except KeyboardInterrupt:
 if action == 'exit':
     print('Exiting...')
     exit(0)
-if action == 'clean':
-    print('Cleaning the build directory...')
 
-    for file in os.listdir(BUILD_DIR):
-        exclude = False
-        for pattern in EXCLUDED_CLEAN_FILES:
-            if fnmatch.fnmatch(file, pattern):
-                exclude = True
-                break
-        if exclude:
-            continue
-
-        file_path = os.path.join(BUILD_DIR, file)
-        try:
-            if os.path.isdir(file_path):
-                print(f'Removing directory {file_path}...', end=' ')
-                shutil.rmtree(file_path)
-                print('Done')
-            else:
-                print(f'Removing file {file_path}...', end=' ')
-                os.remove(file_path)
-                print('Done')
-        except Exception as e:
-            print(f'Error: {e}')
-    print('Done')
-    exit(0)
-
-# We need a profile to continue
 if not config['last_profile']:
     profiles = list(config['profiles'].keys())
     print('No profile selected. Select a profile to continue...')
@@ -243,6 +218,42 @@ if not config['last_profile']:
 else:
     profile: str = config['last_profile']
 
+# We set the build dir to append the profile name as a subdirectory
+BUILD_DIR = os.path.join(BUILD_DIR, profile)
+
+# Create the build directory if it does not exist
+if not os.path.exists(BUILD_DIR):
+    os.makedirs(BUILD_DIR)
+
+if action == 'clean':
+    print('Cleaning the build directory...')
+
+    for file in os.listdir(BUILD_DIR):
+        exclude = False
+        for pattern in EXCLUDED_CLEAN_FILES:
+            if fnmatch.fnmatch(file, pattern):
+                exclude = True
+                break
+        if exclude:
+            continue
+
+        file_path = os.path.join(BUILD_DIR, file)
+        try:
+            if os.path.isdir(file_path):
+                print(f'Removing directory {file_path}...', end=' ')
+                shutil.rmtree(file_path)
+                print('Done')
+            else:
+                print(f'Removing file {file_path}...', end=' ')
+                os.remove(file_path)
+                print('Done')
+        except Exception as e:
+            print(f'Error: {e}')
+    print('Done')
+    exit(0)
+
+# We need a profile to continue
+
 def get_profile_config(profile: str, key: str):
     cfg,ex= CONFIG_TYPES[CONFIG_VALUES[key].type].from_string(config['profiles'][profile][key])
     if ex:
@@ -256,6 +267,7 @@ if action == 'configure':
     build_type = get_profile_config(profile, 'build_type')
     library_type = get_profile_config(profile, 'library_type')
     compile_commands = "ON" if get_profile_config(profile, 'compile_commands') else "OFF"
+    simd_type = get_profile_config(profile, 'simd_type')
 
     print('Generating with types:')
     for key, value in CONFIG_VALUES.items():
@@ -263,7 +275,9 @@ if action == 'configure':
             continue
         print(f'{value.name}: {config["profiles"][profile][key]}')
 
-    os.system(f'{CMAKE_BINARY} -G "{generator}" -DCMAKE_BUILD_TYPE={build_type} -DPULSARION_LIBRARY_TYPE={library_type} -DCMAKE_EXPORT_COMPILE_COMMANDS={compile_commands} -S {PROJECT_DIR} -B {BUILD_DIR}')
+    cmd = f'{CMAKE_BINARY} -G "{generator}" -DCMAKE_BUILD_TYPE={build_type} -DPULSARION_LIBRARY_TYPE={library_type} -DCMAKE_EXPORT_COMPILE_COMMANDS={compile_commands} -DPULSARION_SIMD={simd_type} -S {PROJECT_DIR} -B {BUILD_DIR}'
+    print(f'Running command: {cmd}')
+    os.system(cmd)
 
     if compile_commands == "ON":
         print('Copying compile_commands.json to project root...', end=' ')

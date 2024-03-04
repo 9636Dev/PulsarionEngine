@@ -21,6 +21,7 @@ set(PULSARION_BENCHMARK_SOURCE
 
     # Pulsarion Math
     src/PMVectorBenchmark.cpp
+    src/PMMatrixBenchmark.cpp
 
     # Pulsarion Windowing
     src/WindowBenchmark.cpp

@@ -1,5 +1,6 @@
 #include <benchmark/benchmark.h>
 
+#include "PulsarionWindowing/Lifecycle.hpp"
 #include "PulsarionWindowing/Window.hpp"
 
 using namespace Pulsarion::Windowing;
@@ -12,6 +13,8 @@ static void BM_WindowCreation(benchmark::State& state) {
     for (auto _ : state) {
         benchmark::DoNotOptimize(CreateUniqueWindow("Window", bounds, style, config));
     }
+
+    Lifecycle::Destroy();
 }
 
 BENCHMARK(BM_WindowCreation);
@@ -26,6 +29,8 @@ static void BM_WindowFrameTime(benchmark::State& state) {
         if (!window->ShouldClose())
             window->PollEvents();
     }
+
+    Lifecycle::Destroy();
 }
 
 BENCHMARK(BM_WindowFrameTime);

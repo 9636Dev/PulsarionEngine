@@ -5,6 +5,7 @@
             "build_type": "Debug",
             "library_type": "shared",
             "compile_commands": true,
+            "simd_type": "SSE4.1",
             "executable_files": [
                 "bin\\PulsarionExamples.exe",
                 "bin\\PulsarionMathTests.exe"
@@ -15,6 +16,7 @@
             "build_type": "Release",
             "library_type": "shared",
             "compile_commands": "false",
+            "simd_type": "SSE4.1",
             "executable_files": [
                 "bin\\PulsarionBenchmarks.exe"
             ]
@@ -24,6 +26,7 @@
             "build_type": "Debug",
             "library_type": "shared",
             "compile_commands": "false",
+            "simd_type": "SSE4.1",
             "executable_files": []
         },
         "NeovimUnix": {
@@ -31,6 +34,7 @@
             "build_type": "Debug",
             "library_type": "shared",
             "compile_commands": "true",
+            "simd_type": "None",
             "executable_files": [
                 "bin/PulsarionExamples",
                 "bin/PulsarionMathTests",
@@ -42,6 +46,7 @@
             "build_type": "Release",
             "library_type": "shared",
             "compile_commands": "false",
+            "simd_type": "SSE4.1",
             "executable_files": [
                 "bin/PulsarionBenchmarks"
             ]
@@ -51,8 +56,9 @@
             "build_type": "Debug",
             "library_type": "shared",
             "compile_commands": "false",
+            "simd_type": "SSE4.1",
             "executable_files": []
         }
     },
-    "last_profile": "Benchmarking"
+    "last_profile": "BenchmarkingUnix"
 }
