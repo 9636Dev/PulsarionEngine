@@ -1,3 +1,6 @@
+#include "PulsarionCore/File.hpp"
+#define PULSARION_EXAMPLES_SHADER_LANGUAGE
+#ifdef PULSARION_EXAMPLES_WINDOWING
 #include "PulsarionCore/Log.hpp"
 #include "PulsarionWindowing/FrameLimiter.hpp"
 #include "PulsarionWindowing/Window.hpp"
@@ -29,5 +32,52 @@ int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
     PULSARION_LOG_INFO("Window closed");
     window = nullptr; // Destroy the window
     PULSARION_LOG_INFO("Window destroyed");
+    return 0;
+}
+#elif defined(PULSARION_EXAMPLES_SHADER_LANGUAGE)
+#endif
+#include "PulsarionCore/Log.hpp"
+#include "PulsarionShaderLanguage/Preprocessor.hpp"
+#include "PulsarionShaderLanguage/Lexer.hpp"
+#include "PulsarionShaderLanguage/Parser.hpp"
+#include "PulsarionShaderLanguage/TypeCheck.hpp"
+
+int main([[maybe_unused]] int argc, [[maybe_unused]] char** argv)
+{
+    using namespace Pulsarion::Shader;
+    std::string path = "resources/shaders/lexer_test.pshl";
+    std::string beforePreprocess = Pulsarion::File::ReadAllText(path);
+    PULSARION_LOG_INFO("Before preprocess: {}", beforePreprocess);
+    std::string source = Preprocessor(beforePreprocess, path).Process();
+    PULSARION_LOG_INFO("After preprocess: {}", source);
+    Parser parser(Lexer{source});
+    auto result = parser.Parse();
+
+    // Display warnings regardless of success
+    for (const auto& warning : result.Warnings)
+    {
+        PULSARION_LOG_WARN("[{0}] {1}", Parsing::Error::SourceToString(warning.Source), Parsing::Error::TypeToString(warning.Type));
+    }
+
+    if (result.Success())
+    {
+        PULSARION_LOG_INFO("Parsed with no errors");
+        PULSARION_ASSERT(result.Root.has_value(), "Root node is missing");
+        auto ast = result.Root.value();
+        PULSARION_LOG_DEBUG("AST: {}", ast.ToString());
+
+        TypeChecker typeChecker(std::move(ast));
+        typeChecker.GenerateTypeInformation();
+    }
+    else
+    {
+        PULSARION_LOG_ERROR("Parsing failed");
+
+        for (const auto& error : result.Errors)
+        {
+            PULSARION_LOG_ERROR("[{0}] {1}", Parsing::Error::SourceToString(error.Source), Parsing::Error::TypeToString(error.Type));
+        }
+    }
+
     return 0;
 }

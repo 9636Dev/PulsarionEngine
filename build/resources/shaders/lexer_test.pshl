@@ -1,5 +1,6 @@
+#include "vec3.psh"
+#include "baseVec.psh"
 int min(int, int a);
-struct vec3;
 
 int a = static_cast<int>(1.5f);
 [[annotated]] double b = 0.0;

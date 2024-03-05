@@ -2,6 +2,7 @@ import json
 import os
 import shutil
 import fnmatch
+import subprocess
 from pathlib import Path
 
 class ConfigType:
@@ -38,6 +39,7 @@ CMAKE_BINARY = "cmake"
 CURRENT_DIR = Path(__file__).resolve().parent
 PROJECT_DIR = CURRENT_DIR.parent
 BUILD_DIR = os.path.join(PROJECT_DIR, 'build')
+ORIGINAL_BUILD_DIR = BUILD_DIR # Copy the original build directory
 BINARY_DIR = os.path.join(BUILD_DIR, 'bin')
 CONFIG_TYPES = {
     "string": ConfigType("string", "A string value", lambda _: True, lambda x: x),
@@ -330,7 +332,11 @@ if action == 'run':
     print(f'Running {file}...')
     path = os.path.join(BUILD_DIR, file)
     try:
-        os.system(path)
+        result = subprocess.run(path,
+                        cwd=f"{ORIGINAL_BUILD_DIR}",  # Set your working directory
+                        stdin=None,                  # Use the parent's stdin
+                        text=True)
+        print("Exit code:", result.returncode)
     except KeyboardInterrupt:
         print('Exiting...')
     except Exception as e:

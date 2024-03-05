@@ -1,0 +1,11 @@
+#pragma once
+
+#ifdef INCLUDE_VEC
+struct Vector
+{
+    float a;
+    float b;
+    float c;
+}
+#endif
+

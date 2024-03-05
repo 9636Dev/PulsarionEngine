@@ -1,0 +1,4 @@
+#pragma once
+#include "baseVec.psh"
+
+struct vec3;

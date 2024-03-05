@@ -38,7 +38,7 @@
             "executable_files": [
                 "bin/PulsarionExamples",
                 "bin/PulsarionMathTests",
-                "bin/PulsarionBenchmarks"
+                "bin/PulsarionShaderLanguageTests"
             ]
         },
         "BenchmarkingUnix": {
@@ -60,5 +60,5 @@
             "executable_files": []
         }
     },
-    "last_profile": "BenchmarkingUnix"
+    "last_profile": "NeovimUnix"
 }
