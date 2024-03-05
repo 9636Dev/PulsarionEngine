@@ -11,6 +11,9 @@ add_executable(PulsarionExamples ${PULSARION_EXAMPLE_SOURCES})
 
 if (MSVC)
     set_property(TARGET PulsarionExamples PROPERTY VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_BINARY_DIR}")
+    set_target_properties(PulsarionExamples PROPERTIES
+      VS_DEBUGGER_WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/build"
+    )
 endif()
 
 target_include_directories(PulsarionExamples PUBLIC src)
