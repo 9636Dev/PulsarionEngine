@@ -1,0 +1,10 @@
+#pragma once
+
+#ifndef DEFINE_1
+//file2: Define 1 was not defined
+#endif
+
+#define DEFINE_2
+#include "file4.psh"
+#undef DEFINE_1
+#include "file3.psh"

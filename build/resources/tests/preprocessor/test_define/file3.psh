@@ -1,0 +1,12 @@
+#pragma once
+
+#ifdef DEFINE_2
+#ifndef DEFINE_1
+#define DEFINE_3
+#include "file5.psh"
+#else
+// file3: Define 1 was not undefed
+#endif
+#else
+// file3: Define 2 was not defined
+#endif

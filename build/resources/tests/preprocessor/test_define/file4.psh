@@ -1,0 +1,9 @@
+#ifndef DEFINE_1
+// file4: Define 1 was not defined
+#endif
+
+#ifndef DEFINE_2
+// file4: Define 2 was not defined
+#endif
+
+#define DEFINE_5

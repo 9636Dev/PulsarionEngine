@@ -40,3 +40,5 @@ _deps
 *.pdb
 *.cmake
 *.cache
+
+.DS_Store

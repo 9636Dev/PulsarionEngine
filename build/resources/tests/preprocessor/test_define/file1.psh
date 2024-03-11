@@ -1,0 +1,4 @@
+#pragma once
+
+#define DEFINE_1
+#include "file2.psh"

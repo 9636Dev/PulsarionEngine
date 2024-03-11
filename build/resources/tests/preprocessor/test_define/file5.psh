@@ -1,0 +1,9 @@
+#pragma once
+
+#ifndef DEFINE_5
+// file5: Define 5 was not defined
+#endif
+
+#ifndef DEFINE_3
+// file5: Define 3 was not defined
+#endif
